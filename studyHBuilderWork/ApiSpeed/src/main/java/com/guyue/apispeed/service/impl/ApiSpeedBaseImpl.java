@@ -1,5 +1,7 @@
 package com.guyue.apispeed.service.impl;
 
-public class ApiSpeedBaseImpl {
+import com.guyue.common.service.CommonBaseService;
+
+public class ApiSpeedBaseImpl extends CommonBaseService{
 
 }

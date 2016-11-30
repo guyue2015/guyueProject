@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.util.StringUtils;
 
-import com.guyue.apispeed.util.HttpClientUtil;
+import com.guyue.common.util.HttpClientUtil;
 
 class UserInfoThread implements Runnable{
 	private int low;

@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.guyue.common.controller.CommonBaseController;
+
 @Controller
 @RequestMapping("/test")
-public class TestProjectController {
+public class TestProjectController extends CommonBaseController{
 	@RequestMapping(value="/getName",method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String,String> getProjectName(){

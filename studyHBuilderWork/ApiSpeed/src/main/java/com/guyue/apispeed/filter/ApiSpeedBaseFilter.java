@@ -1,5 +1,7 @@
 package com.guyue.apispeed.filter;
 
-public class ApiSpeedBaseFilter {
+import com.guyue.common.filter.CommonBaseFilter;
+
+public class ApiSpeedBaseFilter extends CommonBaseFilter{
 
 }

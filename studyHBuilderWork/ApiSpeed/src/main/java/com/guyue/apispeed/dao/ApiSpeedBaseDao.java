@@ -1,5 +1,7 @@
 package com.guyue.apispeed.dao;
 
-public class ApiSpeedBaseDao {
+import com.guyue.common.dao.CommonBaseDAO;
+
+public class ApiSpeedBaseDao extends CommonBaseDAO{
 
 }

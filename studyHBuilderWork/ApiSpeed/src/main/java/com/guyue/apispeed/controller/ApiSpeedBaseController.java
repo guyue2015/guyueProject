@@ -1,5 +1,7 @@
 package com.guyue.apispeed.controller;
 
-public class ApiSpeedBaseController {
+import com.guyue.common.controller.CommonBaseController;
+
+public class ApiSpeedBaseController extends CommonBaseController{
 
 }

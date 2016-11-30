@@ -1,5 +1,5 @@
 package com.guyue.common.service;
 
-public class BaseService {
+public class CommonBaseService {
 
 }
