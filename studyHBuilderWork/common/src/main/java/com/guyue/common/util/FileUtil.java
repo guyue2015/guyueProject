@@ -85,7 +85,7 @@ public class FileUtil {
 			List<Path> subPathList = getSubPath(filePath);
 			if(subPathList.size()==0){//空文件夹
 				try {
-					Files.delete(filePath);
+					Files.deleteIfExists(filePath);
 				} catch (IOException e) {
 					logger.error("刪除文件失败，文件路径是:"+filePath,e);
 				}
@@ -95,7 +95,7 @@ public class FileUtil {
 			}
 		}else{
 			try {
-				Files.delete(filePath);
+				Files.deleteIfExists(filePath);
 			} catch (IOException e) {
 				logger.error("刪除文件失败，文件路径是:"+filePath,e);
 			}
@@ -111,5 +111,13 @@ public class FileUtil {
 			logger.error("获取子文件失败，文件路径是:"+filePath,e);
 		}
 		return subPathList;
+	}
+	public static void writeFile(String filePath, String sb) {
+		Path path = createFile(filePath);
+		try {
+			Files.write(path, sb.toString().getBytes());
+		} catch (IOException e) {
+			logger.error("写入文件失败，文件路径是:"+filePath,e);
+		}
 	}
 }
