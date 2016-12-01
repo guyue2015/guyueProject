@@ -36,7 +36,7 @@ public class TestCreateMybatiesConfigxml extends TestCase{
     	List<String> tablesNameList = new ArrayList<String>();
     	init(tablesNameList);
        MybatiesConfigVo mybatiesConfigVo = new MybatiesConfigVo();
-       mybatiesConfigVo.setDbJdbcJarPath("E:\\guyue\\project\\maven3.1\\repository\\mysql\\mysql-connector-java\\5.1.31\\mysql-connector-java-5.1.31.jar");
+       mybatiesConfigVo.setDbJdbcJarPath("C:\\guyue\\project\\maven3.1.1\\repository\\mysql\\mysql-connector-java\\5.1.31\\mysql-connector-java-5.1.31.jar");
        mybatiesConfigVo.setDbDriver("com.mysql.jdbc.Driver");
        mybatiesConfigVo.setDbUrl("jdbc:mysql://127.0.0.1/common?useUnicode=true&amp;characterEncoding=UTF-8");
        mybatiesConfigVo.setDbUserName("root");
@@ -46,7 +46,7 @@ public class TestCreateMybatiesConfigxml extends TestCase{
        mybatiesConfigVo.setVoPackagePath("com.guyue.apispeed.vo");
        mybatiesConfigVo.setTableNamesList(tablesNameList);
        mybatiesConfigVo.setDaoPackagePath("com.guyue.apispeed.dao");
-       mybatiesConfigVo.setResultConfigxmlPath("F:\\studyProjectWork\\studyHBuilderWork\\ApiSpeed\\mybaties-generator-config.xml");
+       mybatiesConfigVo.setResultConfigxmlPath("C:\\guyue\\gitForme\\studyHBuilderWork\\ApiSpeed\\mybaties-generator-config.xml");
        CreateMybatiesConfig.createMybatiesConfig(mybatiesConfigVo);
     }
 

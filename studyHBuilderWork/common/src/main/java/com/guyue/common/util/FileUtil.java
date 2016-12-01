@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 /**
  * 古月操作文件相关接口
  *
@@ -19,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * 2016年11月29日
  */
 public class FileUtil {
-	public static Logger logger = LoggerFactory.getLogger(FileUtil.class);
+	public static Logger logger = GuyueLoggerFactory.getLogger(FileUtil.class);
 	/**
 	 * 创建文件或者文件夹
 	 * @param path
