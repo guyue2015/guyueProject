@@ -31,7 +31,7 @@ public class TestCreateMybatiesConfigxml extends TestCase{
     /**
      * Rigourous Test :-)
      */
-    public void testApp()
+    public void CreateConfigHome()
     {
     	List<String> tablesNameList = new ArrayList<String>();
     	init(tablesNameList);
@@ -47,6 +47,27 @@ public class TestCreateMybatiesConfigxml extends TestCase{
        mybatiesConfigVo.setTableNamesList(tablesNameList);
        mybatiesConfigVo.setDaoPackagePath("com.guyue.apispeed.dao");
        mybatiesConfigVo.setResultConfigxmlPath("C:\\guyue\\gitForme\\studyHBuilderWork\\ApiSpeed\\mybaties-generator-config.xml");
+       CreateMybatiesConfig.createMybatiesConfig(mybatiesConfigVo);
+    }
+    /**
+     * Rigourous Test :-)
+     */
+    public void testCreateConfigOffice()
+    {
+    	List<String> tablesNameList = new ArrayList<String>();
+    	init(tablesNameList);
+       MybatiesConfigVo mybatiesConfigVo = new MybatiesConfigVo();
+       mybatiesConfigVo.setDbJdbcJarPath("E:\\guyue\\project\\maven3.1\\repository\\mysql\\mysql-connector-java\\5.1.31\\mysql-connector-java-5.1.31.jar");
+       mybatiesConfigVo.setDbDriver("com.mysql.jdbc.Driver");
+       mybatiesConfigVo.setDbUrl("jdbc:mysql://127.0.0.1/common?useUnicode=true&amp;characterEncoding=UTF-8");
+       mybatiesConfigVo.setDbUserName("root");
+       mybatiesConfigVo.setDbPassword("root");
+       mybatiesConfigVo.setTargetProjectName("common");
+       mybatiesConfigVo.setMapperPackagePath("com.guyue.common.mapper");
+       mybatiesConfigVo.setVoPackagePath("com.guyue.common.vo");
+       mybatiesConfigVo.setTableNamesList(tablesNameList);
+       mybatiesConfigVo.setDaoPackagePath("com.guyue.common.dao");
+       mybatiesConfigVo.setResultConfigxmlPath("F:\\studyProjectWork\\studyHBuilderWork\\common\\mybaties-generator-config.xml");
        CreateMybatiesConfig.createMybatiesConfig(mybatiesConfigVo);
     }
 
