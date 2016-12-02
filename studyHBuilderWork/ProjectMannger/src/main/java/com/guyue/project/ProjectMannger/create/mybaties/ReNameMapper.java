@@ -37,13 +37,12 @@ public class ReNameMapper {
 		String javaDaoName="";
 		Path javaDaoPath=null;
 		for(Path javaMapperPath:daoJavaPaths){
-			if(javaMapperPath.toString().endsWith(".java")){				
+			if(javaMapperPath.toString().endsWith("Mapper.java")){				
 				javaMapperName = javaMapperPath.getFileName().toString().replace(".java", "");
 				javaDaoName = javaMapperName.replace("Mapper", "Dao");
 				javaContext = new String(Files.readAllBytes(javaMapperPath));
 				javaContext = javaContext.replace(javaMapperName, javaDaoName);
 				javaDaoPath =  FileSystems.getDefault().getPath(daoPath.toString(),javaDaoName+".java");
-				System.out.println(javaDaoPath);
 				Files.write(javaDaoPath, javaContext.getBytes(), StandardOpenOption.CREATE);
 				Files.deleteIfExists(javaMapperPath);
 				

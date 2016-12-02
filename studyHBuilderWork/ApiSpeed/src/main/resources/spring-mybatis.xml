@@ -19,10 +19,10 @@
 	<!-- 自动扫描 -->
 	<context:component-scan base-package="com.guyue.apispeed.service" />
 
-	<bean id="loginFilter" class="com.tyiti.easycommerce.filter.LoginFilter">
+	<bean id="loginFilter" class="com.guyue.common.filter.LoginFilter">
 	</bean>
 
-	<bean id="notAuthUrl" class="com.tyiti.easycommerce.filter.NotAuthUrl">
+	<bean id="notAuthUrl" class="com.guyue.common.filter.NotAuthUrl">
 		<property name="notAuth">
 			<list>
 				<value>test/*</value>

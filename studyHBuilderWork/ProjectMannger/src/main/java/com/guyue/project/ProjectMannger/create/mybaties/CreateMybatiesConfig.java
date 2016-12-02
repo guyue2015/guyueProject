@@ -11,7 +11,6 @@ public class CreateMybatiesConfig {
 	public static void createMybatiesConfig(MybatiesConfigVo configVo){
 		GuyueStringBuffer sb = appendConfig(configVo);
 		String configXmlPath = configVo.getResultConfigxmlPath();
-		System.out.println(sb);
 		if(StringUtil.isNotEmpty(configXmlPath)){
 			FileUtil.deleteFile(configXmlPath);
 			FileUtil.writeFile(configXmlPath,sb.toString());
