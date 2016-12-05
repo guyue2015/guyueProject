@@ -26,7 +26,7 @@
 	<bean id="notAuthUrl" class="com.guyue.common.filter.NotAuthUrl">
 		<property name="notAuth">
 			<list>
-				<value>test/*</value>
+				<!-- <value>test/*</value> -->
 			</list>
 		</property>
 	</bean>
@@ -65,8 +65,13 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:mybatis-config.xml"/>
 		<!-- 自动扫描mapping.xml文件 -->
-		<property name="mapperLocations"
-			value="classpath:com/guyue/apispeed/mapping/*.xml;classpath:com/guyue/common/mapper/*.xml"></property>
+		<property name="mapperLocations">
+			<array>
+				<value>classpath:com/guyue/apispeed/mapping/*.xml</value>
+				<value>classpath:com/guyue/common/mapper/*.xml</value>
+			</array>
+		</property>
+			<!-- value="classpath:com/guyue/apispeed/mapping/*.xml,classpath:com/guyue/common/mapper/*.xml"></property> -->
 	</bean>
 
 	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
