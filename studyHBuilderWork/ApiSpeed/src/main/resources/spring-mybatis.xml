@@ -20,16 +20,16 @@
 	<context:component-scan base-package="com.guyue.apispeed.service" />
 	<context:component-scan base-package="com.guyue.common.service" />
 
-	<bean id="loginFilter" class="com.guyue.common.filter.LoginFilter">
+	<!-- <bean id="loginFilter" class="com.guyue.common.filter.LoginFilter">
 	</bean>
 
 	<bean id="notAuthUrl" class="com.guyue.common.filter.NotAuthUrl">
 		<property name="notAuth">
 			<list>
-				<!-- <value>test/*</value> -->
+				<value>test/*</value>
 			</list>
 		</property>
-	</bean>
+	</bean> -->
 
 	<!-- 引入配置文件 -->
 	<bean id="propertyConfigurer"

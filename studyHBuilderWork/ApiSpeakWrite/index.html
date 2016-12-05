@@ -1,11 +1,46 @@
 <!DOCTYPE html>
-<html ng-app>
-	<head>
-		<meta charset="utf-8" />
-		<title>API快速编辑器</title>
-	</head>
-	<script src="js/lib/angular.min.js"></script>
-	<body>
-		hello {{name}}
-	</body>
+<!--[if IE 8 ]>
+<html class="ie8" ng-app="app" ng-controller="RootController"><![endif]-->
+<!--[if (gt IE 8)|!(IE)]><!-->
+<html ng-app="app" class=""><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>定时任务管理</title>
+  <link href="assets/css/bootstrap.css" rel="stylesheet">
+  <link href="assets/css/bootstrap-treeview.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/css/ngToast.css" rel="stylesheet">
+    <link href="assets/css/jquery.datetimepicker.css" rel="stylesheet">
+</head>
+<body ng-class="{'has-sidebar': sideBarVisible}">
+  <div class="container">
+    <ng-include src="'app/shared/sideBar/sideBar.html'"></ng-include>
+    <div class="content" ui-view=''></div>
+  </div>
+  <ng-include src="'app/shared/footer/footerView.html'"></ng-include>
+
+<script src="assets/js/lib/jquery-1.12.1.js"></script>
+<script src="assets/js/lib/bootstrap.js"></script>
+<script src="assets/js/lib/bootstrap-treeview.js"></script>
+<script src="assets/js/lib/angular.js"></script>
+<script src="assets/js/lib/angular-sanitize.js"></script>
+<script src="assets/js/lib/angular-ui-router.js"></script>
+<script src="assets/js/lib/ngToast.js"></script>
+<script src="assets/js/lib/jquery.datetimepicker.full.js"></script>
+<script src="assets/js/lib/angular-drag.js"></script>
+<script src="assets/js/lib/ng-file-upload-shim.min.js"></script>
+<script src="assets/js/lib/ng-file-upload.min.js"></script>
+<script src="assets/js/lib/ui-bootstrap-tpls.min.js"></script>
+<script src="assets/js/lib/bootstrap.min.js"></script>
+
+<script src="app/app.module.js"></script>
+<script src="app/app.service.js"></script>
+<script src="app/app.route.js"></script>
+<script src="app/app.directive.js"></script>
+
+<!--页面布局js-->
+<script src="app/shared/sideBar/sideBarController.js"></script>
+<script src ="app/components/quartz_manage/test_controller.js"></script>
+
+</body>
 </html>
