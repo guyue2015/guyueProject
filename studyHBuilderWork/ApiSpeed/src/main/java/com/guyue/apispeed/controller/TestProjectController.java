@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.guyue.common.controller.CommonBaseController;
 import com.guyue.common.service.CommonConfigService;
 import com.guyue.common.vo.CommonOptLog;
 
 @Controller
 @RequestMapping("/test")
-public class TestProjectController extends CommonBaseController{
+public class TestProjectController extends ApiSpeedBaseController{
 	@Autowired
 	private CommonConfigService commonConfigService;
 	@RequestMapping(value="/getName",method=RequestMethod.GET)
