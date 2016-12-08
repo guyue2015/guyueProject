@@ -1,12 +1,18 @@
 package com.guyue.project.ProjectMannger.create.mybaties;
 
+import java.util.List;
+import java.util.Map;
+
+import com.guyue.common.util.DB.DatabaseUtil;
+import com.guyue.common.vo.DBColumn;
 import com.guyue.common.vo.DBConnecttion;
 
 public class AddCommentsVo {
-	public void addComments(String voPath,DBConnecttion connect){
-//		查找表信息注释信息
-		String sql="";
-//		根据返回结果封装 
-		
+	public static void addComments(DBConnecttion connect,String dbName,Map<String,String> javaFileTableRelations){
+		DatabaseUtil.createAndReturenConnect(connect);
+		for(String tableName:javaFileTableRelations.keySet()){
+			List<DBColumn> tableColumns = DatabaseUtil.getDBColumns(dbName,tableName);
+		}
 	}
+	
 }

@@ -20,7 +20,7 @@ public class ClassLoadUtil {
 		}
 		URL jarUrl=null;
 		try {
-			jarUrl = new URL(jarPath);
+			jarUrl = new URL("file:"+jarPath);
 		} catch (MalformedURLException e) {
 			logger.error("URL异常",e);
 		}

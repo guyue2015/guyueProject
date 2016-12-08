@@ -1,4 +1,4 @@
-package com.guyue.project.ProjectMannger.Enum;
+package com.guyue.common.Enum;
 /**
  * 数据库类型
 * @ClassName: DBTypeEnum  
