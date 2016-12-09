@@ -464,6 +464,11 @@
 			<artifactId>solr-solrj</artifactId>
 			<version>4.6.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.guyue</groupId>
+			<artifactId>common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<distributionManagement>
 		<repository>
