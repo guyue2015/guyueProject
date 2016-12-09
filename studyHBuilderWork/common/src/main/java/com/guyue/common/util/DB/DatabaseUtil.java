@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 
 import com.guyue.common.Enum.DBTypeEnum;
 import com.guyue.common.util.GuyueLoggerFactory;
+import com.guyue.common.util.GuyueStringBuffer;
 import com.guyue.common.util.StringUtil;
 import com.guyue.common.util.bean.GuYueBeanUtil;
 import com.guyue.common.util.classload.ClassLoadUtil;
@@ -231,15 +232,15 @@ public class DatabaseUtil<T> {
 		}
 		return resultList;
 	}
-	public static List<DBColumn> getDBColumns(String dbName,String tableNames){
+	public static List<DBColumn> getDBColumns(String dbName,List<String> tableNamesList){
 //		查找表信息注释信息
-		String sql=getSqlBySqlDbType(DBTypeEnum.MYSQL,dbName,tableNames);
+		String sql=getSqlBySqlDbType(DBTypeEnum.MYSQL,dbName,tableNamesList);
 //		根据返回结果封装 
 		return DatabaseUtil.queryForListBean(sql, DBColumn.class);
 	}
 	public static List<DBColumn> getDBColumns(String dbName){
 //		查找表信息注释信息
-		String sql=getSqlBySqlDbType(DBTypeEnum.MYSQL,dbName,"");
+		String sql=getSqlBySqlDbType(DBTypeEnum.MYSQL,dbName,null);
 //		根据返回结果封装 
 		return DatabaseUtil.queryForListBean(sql, DBColumn.class);
 	}
@@ -257,14 +258,52 @@ public class DatabaseUtil<T> {
 		}
 		return tableMap;
 	}
-	private static String getSqlBySqlDbType(DBTypeEnum db,String dbName,String tableName){
+	public static Map<String,List<DBColumn>> getDBTables(List<DBColumn> dBColumns){
+		Map<String,List<DBColumn>> tableMap = new HashMap<String, List<DBColumn>>();
+		for(DBColumn dbColumn:dBColumns){
+			if(tableMap.containsKey(dbColumn.getColumnTableName())){
+				tableMap.get(dbColumn.getColumnTableName()).add(dbColumn);
+			}else{
+				List<DBColumn> tableColumnList = new ArrayList<DBColumn>();
+				tableColumnList.add(dbColumn);
+				tableMap.put(dbColumn.getColumnTableName(), tableColumnList);
+			}
+		}
+		return tableMap;
+	}
+	private static String getSqlBySqlDbType(DBTypeEnum db,String dbName,List<String> tableName){
 		String sql = "";
 		if(DBTypeEnum.MYSQL.equals(db)){
 			sql = "select TABLE_SCHEMA as columnDbName,TABLE_NAME as columnTableName,COLUMN_NAME as columnName,DATA_TYPE as columnType, CHARACTER_MAXIMUM_LENGTH as columnMaxLength,COLUMN_KEY as columnPRI,EXTRA as columnAutoInCrement,COLUMN_COMMENT as columnComment from information_schema.COLUMNS WHERE TABLE_SCHEMA = '"+dbName+"'";
 		}
-		if(StringUtil.isNotEmpty(tableName)){
-			sql+=" AND TABLE_NAME='"+tableName+"'";
+		String sqlIn = getSqlInStr(tableName);
+		if(StringUtil.isNotEmpty(sqlIn)){
+			sql+=" AND TABLE_NAME "+sqlIn;
 		}
 		return sql;
+	}
+	private static<T> String getSqlInStr(List<T> inElmentsList){
+		GuyueStringBuffer sqlInSb = new GuyueStringBuffer();
+		boolean hasElments=inElmentsList!=null&&!inElmentsList.isEmpty();
+		if(!hasElments){
+			return sqlInSb.toString();
+		}
+		for(T elment:inElmentsList){
+			if(elment instanceof String){
+				sqlInSb.append("'");
+				sqlInSb.append((String)elment);
+				sqlInSb.append("',");
+			}
+			if(elment instanceof Integer){
+				sqlInSb.append(elment.toString());
+				sqlInSb.append(",");
+			}
+		}
+		if(sqlInSb.isNotEmpty()){
+			sqlInSb.insert(0, " in (");
+			sqlInSb.deleteCharAt(sqlInSb.length());
+			sqlInSb.append(") 	");
+		}
+		return sqlInSb.toString();
 	}
 }

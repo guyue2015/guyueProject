@@ -1,6 +1,7 @@
 package com.guyue.common.util;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -98,6 +99,22 @@ public class FileUtil {
 			} catch (IOException e) {
 				logger.error("刪除文件失败，文件路径是:"+filePath,e);
 			}
+		}
+	}
+	public static String readFileForString(String fileName,Charset... cs){
+		Path filePath = FileSystems.getDefault().getPath(fileName);		
+		return readFileForString(filePath,cs);
+	}
+	public static String readFileForString(Path path,Charset... cs){
+		try {
+			if(cs!=null&&cs.length>0){				
+				return new String(Files.readAllBytes(path),cs[0]);
+			}else{
+				return new String(Files.readAllBytes(path));
+			}
+		} catch (Exception e) {
+			logger.error("读物文件失败，文件路径是:"+path,e);
+			return "";
 		}
 	}
 	public static List<Path> getSubPath(Path filePath){
