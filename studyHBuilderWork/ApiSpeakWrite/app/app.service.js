@@ -12,7 +12,7 @@ angular
     .factory('$apiHost', ['$env', function($env) {
      //return 'http://localhost:8888/mapi';
         if ($env === 'test') {
-            return 'http://192.168.137.128:8080/ApiSpeed';
+            return 'http://test.apispeed.com/ApiSpeed';
         }
         return 'http://127.0.0.1:9999/ApiSpeed';
     }])
