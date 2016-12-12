@@ -5,7 +5,7 @@ import java.util.List;
 import com.guyue.common.util.FileUtil;
 import com.guyue.common.util.GuyueStringBuffer;
 import com.guyue.common.util.StringUtil;
-import com.guyue.project.ProjectMannger.create.vo.MybatiesConfigVo;
+import com.guyue.project.ProjectMannger.vo.MybatiesConfigVo;
 
 public class CreateMybatiesConfig {
 	public static void createMybatiesConfig(MybatiesConfigVo configVo){

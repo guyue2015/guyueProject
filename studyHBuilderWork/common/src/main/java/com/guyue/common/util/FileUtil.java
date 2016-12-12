@@ -105,6 +105,18 @@ public class FileUtil {
 		Path filePath = FileSystems.getDefault().getPath(fileName);		
 		return readFileForString(filePath,cs);
 	}
+	public static List<String> readFileForList(Path path,Charset... cs){
+		try {
+			if(cs!=null&&cs.length>0){				
+				return Files.readAllLines(path, cs[0]);
+			}else{
+				return Files.readAllLines(path, cs[0]);
+			}
+		} catch (Exception e) {
+			logger.error("读物文件失败，文件路径是:"+path,e);
+			return new ArrayList<String>();
+		}
+	}
 	public static String readFileForString(Path path,Charset... cs){
 		try {
 			if(cs!=null&&cs.length>0){				

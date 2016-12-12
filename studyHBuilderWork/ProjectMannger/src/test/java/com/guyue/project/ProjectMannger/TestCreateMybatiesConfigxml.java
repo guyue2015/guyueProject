@@ -3,12 +3,12 @@ package com.guyue.project.ProjectMannger;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.guyue.project.ProjectMannger.create.mybaties.CreateMybatiesConfig;
-import com.guyue.project.ProjectMannger.create.vo.MybatiesConfigVo;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import com.guyue.project.ProjectMannger.create.mybaties.CreateMybatiesConfig;
+import com.guyue.project.ProjectMannger.vo.MybatiesConfigVo;
 
 public class TestCreateMybatiesConfigxml extends TestCase{
 	 /**

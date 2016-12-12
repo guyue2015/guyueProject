@@ -1,4 +1,4 @@
-package com.guyue.project.ProjectMannger.create.vo;
+package com.guyue.project.ProjectMannger.vo;
 
 import java.util.List;
 

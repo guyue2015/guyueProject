@@ -1,5 +1,6 @@
 package com.guyue.common.util.DB;
 
+import java.net.URLClassLoader;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -32,7 +33,7 @@ public class DatabaseUtil<T> {
 	public static Connection createAndReturenConnect(DBConnecttion connection){
 		if(StringUtil.isNotEmpty(connection.getJdbcJarPath())){
 //			根据jar包路径加载驱动类
-			ClassLoadUtil.loadClassByJarPath(connection.getJdbcJarPath());
+			URLClassLoader myclassload = ClassLoadUtil.loadClassByJarPath(connection.getJdbcJarPath());
 		}
 		try{
 		 Class.forName(connection.getJdbcDiverClass());
