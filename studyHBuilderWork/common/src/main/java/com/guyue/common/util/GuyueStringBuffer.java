@@ -21,6 +21,9 @@ public class GuyueStringBuffer {
 	public void append(String str){
 		sb.append(str);
 	}
+	public void clear(){
+		sb.setLength(0);
+	}
 	public boolean isNotEmpty(){
 		return sb.length()>0;
 	}

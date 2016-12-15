@@ -140,10 +140,17 @@ public class FileUtil {
 		}
 		return subPathList;
 	}
-	public static void writeFile(String filePath, String sb) {
-		Path path = createFile(filePath);
+	public static void writeFile(String fileName, String sb) {
+		Path path = createFile(fileName);
 		try {
 			Files.write(path, sb.toString().getBytes());
+		} catch (IOException e) {
+			logger.error("写入文件失败，文件路径是:"+fileName,e);
+		}
+	}
+	public static void writeFile(Path filePath, String sb) {
+		try {
+			Files.write(filePath, sb.toString().getBytes());
 		} catch (IOException e) {
 			logger.error("写入文件失败，文件路径是:"+filePath,e);
 		}
