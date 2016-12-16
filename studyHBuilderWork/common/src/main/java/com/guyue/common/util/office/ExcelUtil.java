@@ -18,9 +18,11 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
+import org.springframework.util.StringUtils;
 
 import com.guyue.common.util.FileUtil;
 import com.guyue.common.util.GuyueLoggerFactory;
+import com.guyue.common.util.StringUtil;
 
 public class ExcelUtil {
 	/**
@@ -52,11 +54,17 @@ public class ExcelUtil {
 				for(int j=0;j<rowNum;j++){
 					Row row = sheetAt.getRow(j);
 					rowMap = new TreeMap<String, String>();
-					int columnNum = row.getPhysicalNumberOfCells();
+					if(row==null){
+						continue;
+					}
+					int columnNum = row.getLastCellNum();
 					for(int k=0;k<columnNum;k++){
 						Cell cell = row.getCell(k);
 						if(cell!=null){
-							rowMap.put(""+k,cell.getStringCellValue());
+							if(cell.getCellType()!=Cell.CELL_TYPE_STRING){
+								cell.setCellType(Cell.CELL_TYPE_STRING);
+							}
+							rowMap.put(""+k,StringUtil.praseNullString(cell.getStringCellValue()));
 						}
 					}
 					excelDataList.add(rowMap);

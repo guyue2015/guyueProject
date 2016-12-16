@@ -38,8 +38,8 @@ public class TestCreateMySqlFromExcel
      */
     public void testCreateMysql()
     {
-    	String excelFilePath= "C:\\guyue\\gitForme\\studyHBuilderWork\\项目数据库设计\\项目管理.xlsx";
-    	String sqlFilePath = "C:\\guyue\\gitForme\\studyHBuilderWork\\sql";
+    	String excelFilePath= "F:\\studyProjectWork\\studyHBuilderWork\\项目数据库设计\\项目管理.xlsx";
+    	String sqlFilePath = "F:\\studyProjectWork\\studyHBuilderWork\\sql";
     	Path excelPath = FileSystems.getDefault().getPath(excelFilePath);
     	Path sqlPath = FileSystems.getDefault().getPath(sqlFilePath);
     	CreateMySQLFromExcel.createMysqlFromExcel(excelPath, sqlPath);

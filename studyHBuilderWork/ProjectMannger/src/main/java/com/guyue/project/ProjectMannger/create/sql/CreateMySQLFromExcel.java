@@ -11,84 +11,130 @@ import com.guyue.common.util.FileUtil;
 import com.guyue.common.util.GuyueStringBuffer;
 import com.guyue.common.util.StringUtil;
 import com.guyue.common.util.office.ExcelUtil;
+import com.guyue.project.ProjectMannger.vo.ExcelTables;
 
 public class CreateMySQLFromExcel {
-	public static void createMysqlFromExcel(Path excelPath,Path sqlPath){
-		Map<String, String> readDbSqls = readExcel(excelPath);
-		for(Entry<String,String> entry:readDbSqls.entrySet()){
-			String databaseName = entry.getKey();
-			String sqlContext = entry.getValue();
-//			写入指定路径
-			Path sqlFilePath = Paths.get(sqlPath.toString(), databaseName+".sql");
-			FileUtil.deleteFile(sqlFilePath);
-			sqlContext="DROP DATABASE IF EXISTS "+databaseName+";\n"
-			+"CREATE DATABASE "+databaseName+";\n"
-			+"USE "+databaseName+";\n"+sqlContext;
-			FileUtil.writeFile(sqlFilePath, sqlContext);
-		}
+	/**
+	 * excel sheeet tables index 0
+	 */
+	private static String DB_EXCEL_SHEET_INDEX_TABLES = "0";
+	/**
+	 * excel sheeet tablescolumn index 1
+	 */
+	private static String DB_EXCEL_SHEET_INDEX_TABLES_COLUMNS = "1";
+	/**
+	 * excel sheeet tablesdata index 2
+	 */
+	private static String DB_EXCEL_SHEET_INDEX_TABLES_DATA = "2";
+
+	public static void createMysqlFromExcel(Path excelPath, Path sqlPath) {
+		Map<String, ExcelTables> readDbSqls = readExcel(excelPath);
+		Map<String,String> fileSql = new HashMap<String, String>();
+		 for(Entry<String,ExcelTables> entry:readDbSqls.entrySet()){
+			 ExcelTables excelTable = entry.getValue();
+			 String createTablseSqlContext = excelTable.getCreateTablesSql();
+			 String initTableDataSqlContext = excelTable.getInitDataSql();
+//		  	写入指定路径
+			 String dbCreateFile = excelTable.getTableDb()+"/Tables.sql";
+			 String dbInitFile = excelTable.getTableDb()+"/Init.sql";
+			 if(fileSql.containsKey(dbCreateFile)&&StringUtil.isNotEmpty(createTablseSqlContext)){
+				 createTablseSqlContext = fileSql.get(dbCreateFile)+createTablseSqlContext;
+			 }
+			 if(fileSql.containsKey(dbInitFile)&&StringUtil.isNotEmpty(initTableDataSqlContext)){
+				 initTableDataSqlContext = fileSql.get(dbInitFile)+initTableDataSqlContext;
+			 }
+			 if(!fileSql.containsKey(dbCreateFile)&&StringUtil.isNotEmpty(createTablseSqlContext)){
+				 GuyueStringBuffer dbHeader = new GuyueStringBuffer();
+				 dbHeader.appendln("DROP DATABASE IF EXISTS "+excelTable.getTableDb()+";");
+				 dbHeader.appendln("CREATE DATABASE "+excelTable.getTableDb()+";");
+				 dbHeader.appendln("USE "+excelTable.getTableDb()+";");
+				 createTablseSqlContext = dbHeader.toString()+createTablseSqlContext;
+			 }
+			 if(!fileSql.containsKey(dbInitFile)&&StringUtil.isNotEmpty(initTableDataSqlContext)){
+				 initTableDataSqlContext = "USE "+excelTable.getTableDb()+";\n"+initTableDataSqlContext;
+			 }
+			 if(StringUtil.isNotEmpty(createTablseSqlContext)){
+				 fileSql.put(dbCreateFile, createTablseSqlContext);
+			 }
+			 if(StringUtil.isNotEmpty(initTableDataSqlContext)){
+				 fileSql.put(dbInitFile, initTableDataSqlContext);
+			 }
+		 }
+		 for(String fileName:fileSql.keySet()){
+			 Path sqlFilePath = Paths.get(sqlPath.toString(), fileName);
+			 if(FileUtil.exists(sqlFilePath)){
+				 FileUtil.deleteFile(sqlFilePath);
+			 }else{
+				 FileUtil.createFile(sqlFilePath);
+			 }
+			 FileUtil.writeFile(sqlFilePath, fileSql.get(fileName));
+		 }
 	}
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static Map<String,String> readExcel(Path excelPath){
-		Map<String,String> dbMap = new HashMap<String, String>();
-		String tableName = "";
-		String dbName = "";
-		String comments="";
-		GuyueStringBuffer createTableSql = new GuyueStringBuffer();
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	public static Map<String, ExcelTables> readExcel(Path excelPath) {
+		Map<String, ExcelTables> excelTablesMap = new HashMap<String, ExcelTables>();
 		Map<String, List> readExcel = ExcelUtil.readExcel(excelPath);
-		for(Entry entry:readExcel.entrySet()){
-			List<Map<String,String>> excelList = (List<Map<String, String>>) entry.getValue();
-				int size = excelList.size();
-				for(Map<String,String> cellMap:excelList){
-					size--;
-					if("库名".equals(cellMap.get("0"))){
-						continue;
-					}
-					if(StringUtil.isEmpty(tableName)){
-						tableName = cellMap.get("1");
-						dbName = cellMap.get("0");
-						createTableSql.appendln("DROP TABLE IF EXISTS "+tableName+";");
-						createTableSql.appendln("create table "+tableName+" (");
-					}
-					if(!tableName.equals(cellMap.get("1"))){
-						createTableSql.appendln("        PRIMARY KEY (id)");
-						createTableSql.appendln(")CHARACTER SET utf8 COLLATE utf8_general_ci;");
-						String dbSql = dbMap.get(dbName);
-						if(StringUtil.isEmpty(dbSql)){
-							dbSql="";
-						}
-						dbMap.put(dbName, dbSql+"\n"+createTableSql);
-						createTableSql.clear();
-						dbName = cellMap.get("0");
-						tableName = cellMap.get("1");
-						createTableSql.appendln("DROP TABLE IF EXISTS "+tableName+";");
-						createTableSql.appendln("create table "+tableName+" (");
-					}
-					if(cellMap.get("2").equalsIgnoreCase("id")){
-						createTableSql.append("        "+cellMap.get("2")+" "+cellMap.get("3")+" NOT NULL AUTO_INCREMENT");
-					}else{
-						createTableSql.append("        "+cellMap.get("2")+" "+cellMap.get("3"));
-					}
-					if(cellMap.containsKey("4")&&StringUtil.isNotEmpty(cellMap.containsKey("4"))){
-						comments = cellMap.get("4");
-					}
-					if(cellMap.containsKey("5")&&StringUtil.isNotEmpty(cellMap.containsKey("5"))){
-						comments += cellMap.get("5");
-					}
-					if(StringUtil.isNotEmpty(comments)){
-						createTableSql.append(" comment '"+comments+"'");
-					}
-					createTableSql.appendln(",");
-					if(size==0){
-						createTableSql.appendln("        PRIMARY KEY (id)");
-						createTableSql.appendln(")CHARACTER SET utf8 COLLATE utf8_general_ci;");
-						String dbSql = dbMap.get(cellMap.get("0"));
-						if(StringUtil.isEmpty(dbSql)){
-							dbSql="";
-						}
-						dbMap.put(cellMap.get("0"), dbSql+"\n"+createTableSql);
-					}
+		ExcelTables excelTables = null;
+		for (Entry<String, List> entry : readExcel.entrySet()) {
+			String sheetIndex = entry.getKey();
+			List<Map<String, String>> excelList = (List<Map<String, String>>) entry
+					.getValue();
+			for (Map<String, String> excelDataMap : excelList) {
+				if ("tableid".equalsIgnoreCase(excelDataMap.get("0"))) {// 跳过第一行
+					continue;
 				}
+				if (excelTablesMap.containsKey(excelDataMap.get("0"))) {
+					excelTables = excelTablesMap.get(excelDataMap.get("0"));
+				} else {
+					excelTables = new ExcelTables(excelDataMap.get("0"));
+					excelTablesMap.put(excelDataMap.get("0"), excelTables);
+				}
+				if (DB_EXCEL_SHEET_INDEX_TABLES.equals(sheetIndex)) {
+					praseTables(excelTables, excelDataMap);
+				} else if (DB_EXCEL_SHEET_INDEX_TABLES_COLUMNS
+						.equals(sheetIndex)) {
+					praseTablesColumn(excelTables, excelDataMap);
+				} else if (DB_EXCEL_SHEET_INDEX_TABLES_DATA.equals(sheetIndex)) {
+					praseTablesData(excelTables, excelDataMap);
+				}
+			}
 		}
-		return dbMap;
+		return excelTablesMap;
 	}
+	private static void praseTablesData(ExcelTables excelTables,
+			Map<String, String> excelDataMap) {
+		if(excelDataMap.containsKey("1")&&"1".equals(excelDataMap.get("1"))){
+			excelTables.setInitDateColumn(excelDataMap);
+		}else{
+			excelTables.getInitDate().add(excelDataMap);
+		}
+		excelDataMap.remove("0");
+		excelDataMap.remove("1");
+	}
+	private static void praseTablesColumn(ExcelTables excelTables,
+			Map<String, String> excelDataMap) {
+		String comments = "";
+		if (excelDataMap.containsKey("4")) {
+			comments+=excelDataMap.get("4");
+		}
+		if (excelDataMap.containsKey("5")) {
+			comments+=excelDataMap.get("5");
+		}
+		GuyueStringBuffer sql = new GuyueStringBuffer();
+		sql.append("        "+excelDataMap.get("2")+"  "+excelDataMap.get("3"));
+		if("id".equalsIgnoreCase(excelDataMap.get("2"))){
+			sql.append("  NOT NULL AUTO_INCREMENT  ");
+		}
+		if(StringUtil.isNotEmpty(comments)){
+			sql.append("  COMMENT '"+comments+"'");
+		}
+		sql.append(",");
+		excelTables.getColumnCreateTableSql().add(sql.toString());
+	}
+	private static void praseTables(ExcelTables excelTables,
+			Map<String, String> excelDataMap) {
+		excelTables.setTableDb(excelDataMap.get("1"));
+		excelTables.setTableName(excelDataMap.get("2"));
+	}
+
 }

@@ -29,6 +29,9 @@ public class FileUtil {
 	public static Path createFile(Path path,FileAttribute<?>... attrs){
 		Path filePath = null;
 		try {
+			if(!exists(path.getParent())){
+				createFile(path.getParent());
+			}
 			if(!path.toString().contains(".")){
 				filePath = Files.createDirectory(path, attrs);
 			}else{
@@ -139,6 +142,16 @@ public class FileUtil {
 			logger.error("获取子文件失败，文件路径是:"+filePath,e);
 		}
 		return subPathList;
+	}
+	/**
+	 * 判断指定filePath是否存在
+	  * @Title: exists 
+	  * @Description: 
+	  * @param filePath
+	  * @return
+	 */
+	public static boolean exists(Path filePath){
+		return Files.exists(filePath);
 	}
 	public static void writeFile(String fileName, String sb) {
 		Path path = createFile(fileName);
