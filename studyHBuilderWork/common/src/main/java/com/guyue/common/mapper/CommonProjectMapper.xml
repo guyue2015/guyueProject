@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guyue.common.dao.CommonProjectMapper" >
+  <resultMap id="BaseResultMap" type="com.guyue.common.vo.CommonProject" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="c_name" property="cName" jdbcType="VARCHAR" />
+    <result column="c_path" property="cPath" jdbcType="VARCHAR" />
+    <result column="n_codetype" property="nCodetype" jdbcType="INTEGER" />
+    <result column="n_createuserid" property="nCreateuserid" jdbcType="BIGINT" />
+    <result column="d_createtime" property="dCreatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, c_name, c_path, n_codetype, n_createuserid, d_createtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_common_project
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_common_project
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.guyue.common.vo.CommonProject" >
+    insert into t_common_project (id, c_name, c_path, 
+      n_codetype, n_createuserid, d_createtime
+      )
+    values (#{id,jdbcType=BIGINT}, #{cName,jdbcType=VARCHAR}, #{cPath,jdbcType=VARCHAR}, 
+      #{nCodetype,jdbcType=INTEGER}, #{nCreateuserid,jdbcType=BIGINT}, #{dCreatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.guyue.common.vo.CommonProject" >
+    insert into t_common_project
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cName != null" >
+        c_name,
+      </if>
+      <if test="cPath != null" >
+        c_path,
+      </if>
+      <if test="nCodetype != null" >
+        n_codetype,
+      </if>
+      <if test="nCreateuserid != null" >
+        n_createuserid,
+      </if>
+      <if test="dCreatetime != null" >
+        d_createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cName != null" >
+        #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cPath != null" >
+        #{cPath,jdbcType=VARCHAR},
+      </if>
+      <if test="nCodetype != null" >
+        #{nCodetype,jdbcType=INTEGER},
+      </if>
+      <if test="nCreateuserid != null" >
+        #{nCreateuserid,jdbcType=BIGINT},
+      </if>
+      <if test="dCreatetime != null" >
+        #{dCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guyue.common.vo.CommonProject" >
+    update t_common_project
+    <set >
+      <if test="cName != null" >
+        c_name = #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cPath != null" >
+        c_path = #{cPath,jdbcType=VARCHAR},
+      </if>
+      <if test="nCodetype != null" >
+        n_codetype = #{nCodetype,jdbcType=INTEGER},
+      </if>
+      <if test="nCreateuserid != null" >
+        n_createuserid = #{nCreateuserid,jdbcType=BIGINT},
+      </if>
+      <if test="dCreatetime != null" >
+        d_createtime = #{dCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guyue.common.vo.CommonProject" >
+    update t_common_project
+    set c_name = #{cName,jdbcType=VARCHAR},
+      c_path = #{cPath,jdbcType=VARCHAR},
+      n_codetype = #{nCodetype,jdbcType=INTEGER},
+      n_createuserid = #{nCreateuserid,jdbcType=BIGINT},
+      d_createtime = #{dCreatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

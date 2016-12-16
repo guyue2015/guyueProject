@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guyue.apispeed.dao.ProjectIntefaceMapper" >
+  <resultMap id="BaseResultMap" type="com.guyue.apispeed.vo.ProjectInteface" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="c_name" property="cName" jdbcType="VARCHAR" />
+    <result column="c_path" property="cPath" jdbcType="VARCHAR" />
+    <result column="c_desc" property="cDesc" jdbcType="VARCHAR" />
+    <result column="c_classname" property="cClassname" jdbcType="VARCHAR" />
+    <result column="c_methodname" property="cMethodname" jdbcType="VARCHAR" />
+    <result column="c_methodtype" property="cMethodtype" jdbcType="VARCHAR" />
+    <result column="c_result" property="cResult" jdbcType="VARCHAR" />
+    <result column="n_projectid" property="nProjectid" jdbcType="BIGINT" />
+    <result column="n_author" property="nAuthor" jdbcType="BIGINT" />
+    <result column="n_status" property="nStatus" jdbcType="INTEGER" />
+    <result column="c_returneg" property="cReturneg" jdbcType="VARCHAR" />
+    <result column="n_interfaceid" property="nInterfaceid" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, c_name, c_path, c_desc, c_classname, c_methodname, c_methodtype, c_result, n_projectid, 
+    n_author, n_status, c_returneg, n_interfaceid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_inteface
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_project_inteface
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.guyue.apispeed.vo.ProjectInteface" >
+    insert into t_project_inteface (id, c_name, c_path, 
+      c_desc, c_classname, c_methodname, 
+      c_methodtype, c_result, n_projectid, 
+      n_author, n_status, c_returneg, 
+      n_interfaceid)
+    values (#{id,jdbcType=BIGINT}, #{cName,jdbcType=VARCHAR}, #{cPath,jdbcType=VARCHAR}, 
+      #{cDesc,jdbcType=VARCHAR}, #{cClassname,jdbcType=VARCHAR}, #{cMethodname,jdbcType=VARCHAR}, 
+      #{cMethodtype,jdbcType=VARCHAR}, #{cResult,jdbcType=VARCHAR}, #{nProjectid,jdbcType=BIGINT}, 
+      #{nAuthor,jdbcType=BIGINT}, #{nStatus,jdbcType=INTEGER}, #{cReturneg,jdbcType=VARCHAR}, 
+      #{nInterfaceid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.guyue.apispeed.vo.ProjectInteface" >
+    insert into t_project_inteface
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cName != null" >
+        c_name,
+      </if>
+      <if test="cPath != null" >
+        c_path,
+      </if>
+      <if test="cDesc != null" >
+        c_desc,
+      </if>
+      <if test="cClassname != null" >
+        c_classname,
+      </if>
+      <if test="cMethodname != null" >
+        c_methodname,
+      </if>
+      <if test="cMethodtype != null" >
+        c_methodtype,
+      </if>
+      <if test="cResult != null" >
+        c_result,
+      </if>
+      <if test="nProjectid != null" >
+        n_projectid,
+      </if>
+      <if test="nAuthor != null" >
+        n_author,
+      </if>
+      <if test="nStatus != null" >
+        n_status,
+      </if>
+      <if test="cReturneg != null" >
+        c_returneg,
+      </if>
+      <if test="nInterfaceid != null" >
+        n_interfaceid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cName != null" >
+        #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cPath != null" >
+        #{cPath,jdbcType=VARCHAR},
+      </if>
+      <if test="cDesc != null" >
+        #{cDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="cClassname != null" >
+        #{cClassname,jdbcType=VARCHAR},
+      </if>
+      <if test="cMethodname != null" >
+        #{cMethodname,jdbcType=VARCHAR},
+      </if>
+      <if test="cMethodtype != null" >
+        #{cMethodtype,jdbcType=VARCHAR},
+      </if>
+      <if test="cResult != null" >
+        #{cResult,jdbcType=VARCHAR},
+      </if>
+      <if test="nProjectid != null" >
+        #{nProjectid,jdbcType=BIGINT},
+      </if>
+      <if test="nAuthor != null" >
+        #{nAuthor,jdbcType=BIGINT},
+      </if>
+      <if test="nStatus != null" >
+        #{nStatus,jdbcType=INTEGER},
+      </if>
+      <if test="cReturneg != null" >
+        #{cReturneg,jdbcType=VARCHAR},
+      </if>
+      <if test="nInterfaceid != null" >
+        #{nInterfaceid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guyue.apispeed.vo.ProjectInteface" >
+    update t_project_inteface
+    <set >
+      <if test="cName != null" >
+        c_name = #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cPath != null" >
+        c_path = #{cPath,jdbcType=VARCHAR},
+      </if>
+      <if test="cDesc != null" >
+        c_desc = #{cDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="cClassname != null" >
+        c_classname = #{cClassname,jdbcType=VARCHAR},
+      </if>
+      <if test="cMethodname != null" >
+        c_methodname = #{cMethodname,jdbcType=VARCHAR},
+      </if>
+      <if test="cMethodtype != null" >
+        c_methodtype = #{cMethodtype,jdbcType=VARCHAR},
+      </if>
+      <if test="cResult != null" >
+        c_result = #{cResult,jdbcType=VARCHAR},
+      </if>
+      <if test="nProjectid != null" >
+        n_projectid = #{nProjectid,jdbcType=BIGINT},
+      </if>
+      <if test="nAuthor != null" >
+        n_author = #{nAuthor,jdbcType=BIGINT},
+      </if>
+      <if test="nStatus != null" >
+        n_status = #{nStatus,jdbcType=INTEGER},
+      </if>
+      <if test="cReturneg != null" >
+        c_returneg = #{cReturneg,jdbcType=VARCHAR},
+      </if>
+      <if test="nInterfaceid != null" >
+        n_interfaceid = #{nInterfaceid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guyue.apispeed.vo.ProjectInteface" >
+    update t_project_inteface
+    set c_name = #{cName,jdbcType=VARCHAR},
+      c_path = #{cPath,jdbcType=VARCHAR},
+      c_desc = #{cDesc,jdbcType=VARCHAR},
+      c_classname = #{cClassname,jdbcType=VARCHAR},
+      c_methodname = #{cMethodname,jdbcType=VARCHAR},
+      c_methodtype = #{cMethodtype,jdbcType=VARCHAR},
+      c_result = #{cResult,jdbcType=VARCHAR},
+      n_projectid = #{nProjectid,jdbcType=BIGINT},
+      n_author = #{nAuthor,jdbcType=BIGINT},
+      n_status = #{nStatus,jdbcType=INTEGER},
+      c_returneg = #{cReturneg,jdbcType=VARCHAR},
+      n_interfaceid = #{nInterfaceid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
