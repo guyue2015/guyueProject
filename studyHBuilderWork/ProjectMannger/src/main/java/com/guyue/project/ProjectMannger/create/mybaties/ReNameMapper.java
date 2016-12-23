@@ -7,6 +7,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,9 +22,10 @@ import com.guyue.common.util.StringUtil;
 public class ReNameMapper {
 	public static Logger logger = GuyueLoggerFactory.getLogger(FileUtil.class);
 	public static void reNameMapperJavaFiles(Path mappingPath,Path daoPath) throws IOException{
-		List<Path> mappingXmlPaths = FileUtil.getSubPath(mappingPath);
-		
-		List<Path> daoJavaPaths = FileUtil.getSubPath(daoPath);
+		List<Path> mappingXmlPaths = new ArrayList<Path>();
+		FileUtil.getSubPath(mappingPath,mappingXmlPaths);
+		List<Path> daoJavaPaths = new ArrayList<Path>();
+		FileUtil.getSubPath(daoPath,daoJavaPaths);
 		if(GuyueCollectionUtils.isEmpty(mappingXmlPaths)){
 			logger.error("沒有mapping文件,路徑是{}",mappingPath);
 			return;

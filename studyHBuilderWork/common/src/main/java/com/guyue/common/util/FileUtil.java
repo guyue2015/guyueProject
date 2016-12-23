@@ -85,7 +85,8 @@ public class FileUtil {
 	 */
 	public static void deleteFile(Path filePath,boolean deleteSubFile){
 		if(deleteSubFile && Files.isDirectory(filePath)){
-			List<Path> subPathList = getSubPath(filePath);
+			List<Path> subPathList = new ArrayList<Path>();
+			getSubPath(filePath,subPathList);
 			if(subPathList.size()==0){//空文件夹
 				try {
 					Files.deleteIfExists(filePath);
@@ -113,7 +114,7 @@ public class FileUtil {
 			if(cs!=null&&cs.length>0){				
 				return Files.readAllLines(path, cs[0]);
 			}else{
-				return Files.readAllLines(path, cs[0]);
+				return Files.readAllLines(path,Charset.defaultCharset());
 			}
 		} catch (Exception e) {
 			logger.error("读物文件失败，文件路径是:"+path,e);
@@ -132,16 +133,18 @@ public class FileUtil {
 			return "";
 		}
 	}
-	public static List<Path> getSubPath(Path filePath){
-		List<Path> subPathList = new ArrayList<Path>(); 
+	public static void getSubPath(Path filePath,List<Path> subPathList){
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(filePath)) {
 			  for (Path entry: stream) {
-				  subPathList.add(entry);
+					  if(Files.isDirectory(entry)){
+						  getSubPath(entry,subPathList);
+					  }else{
+						  subPathList.add(entry);
+					  }
 			      }
 		} catch (Exception e) {
 			logger.error("获取子文件失败，文件路径是:"+filePath,e);
 		}
-		return subPathList;
 	}
 	/**
 	 * 判断指定filePath是否存在

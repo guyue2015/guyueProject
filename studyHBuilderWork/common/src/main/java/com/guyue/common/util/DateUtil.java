@@ -13,12 +13,21 @@ import java.util.Date;
  */
 public class DateUtil {
 	public static DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public static DateFormat df_ymd = new SimpleDateFormat("yyyy-MM-dd");
 	/**
 	 * 格式化时间 
 	 * @param date
 	 * @return
 	 */
-	public static String praseDate(Date date){
+	public static String praseDateymdhms(Date date){
 		return df.format(date);
+	}
+	/**
+	 * 格式化时间 
+	 * @param date
+	 * @return
+	 */
+	public static String praseDateymd(Date date){
+		return df_ymd.format(date);
 	}
 }

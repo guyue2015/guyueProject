@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.guyue.project</groupId>
-  <artifactId>ProjectMannger</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+	<groupId>com.guyue.project</groupId>
+	<artifactId>ProjectMannger</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-  <name>ProjectMannger</name>
- <properties>
+	<name>ProjectMannger</name>
+	<properties>
 		<java-version>1.7</java-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework-version>4.2.4.RELEASE</org.springframework-version>
@@ -29,6 +29,11 @@
 		<commons-logging-version>1.1</commons-logging-version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>com.jacob</groupId>
+			<artifactId>jacob</artifactId>
+			<version>1.10</version>
+		</dependency>
 		<!-- test -->
 		<dependency>
 			<groupId>junit</groupId>
