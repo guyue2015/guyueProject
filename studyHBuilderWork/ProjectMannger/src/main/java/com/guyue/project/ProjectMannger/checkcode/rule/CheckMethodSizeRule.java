@@ -13,7 +13,11 @@ import com.guyue.common.util.FileUtil;
 import com.guyue.common.util.StringUtil;
 
 public class CheckMethodSizeRule implements Rule{
-	private static int method_bad_lineCount=100;
+	private static int method_bad_lineCount=200;
+	public List<JSONObject> notRightList= new ArrayList<JSONObject>();
+	public CheckMethodSizeRule(){
+		notRightList.clear();
+	}
 	@Override
 	public String getFileSuffix() {
 		return ".java";
@@ -26,12 +30,13 @@ public class CheckMethodSizeRule implements Rule{
 		if(javaFilePath.toString().endsWith(getFileSuffix())){
 			List<String> javaFileStrings = FileUtil.readFileForList(javaFilePath, Charset.defaultCharset());
 			String lineContext="";
-			if(javaFilePath.toString().contains("RedisService.java")){
-				System.out.println(code_level);
-			}
 			for(int lineNumber=0;lineNumber<javaFileStrings.size();lineNumber++){
 				lineContext = javaFileStrings.get(lineNumber);
-				if(isContainBranceLeft(lineContext)){
+				String lastLine="";
+				if(lineNumber>1){
+					lastLine = javaFileStrings.get(lineNumber-1);
+				}
+				if(isContainBranceLeft(lineContext,lastLine)){
 					code_level++;
 					if(code_level==2){
 						JSONObject methodJson = new JSONObject();
@@ -48,7 +53,7 @@ public class CheckMethodSizeRule implements Rule{
 						methodList.add(methodJson);
 					}
 				}
-				if(isContainBranceRight(lineContext)){
+				if(isContainBranceRight(lineContext,lastLine)){
 					if(code_level>0){
 						code_level--;
 					}
@@ -68,6 +73,7 @@ public class CheckMethodSizeRule implements Rule{
 				System.out.println(getErrorInfo(javaFilePath.toString(),methodJson.getString("methodName"),methodJson.getString("startLine"),methodJson.getString("methodCountLine")));
 			}
 		}
+		notRightList.addAll(methodResultList);
 	}
 	@Override
 	public String getErrorInfo(Object... errorInfo) {
@@ -82,15 +88,17 @@ public class CheckMethodSizeRule implements Rule{
 		}
 		return methodName;
 	}
-	public static boolean isContainBranceLeft(String context) {
-		if (StringUtil.isNotEmpty(context) && context.contains("{")&&!context.trim().startsWith("@")) {
+	public static boolean isContainBranceLeft(String context, String lastLine) {
+		boolean isAnountion=context.trim().startsWith("@")&&!lastLine.endsWith("(")&&!lastLine.endsWith(",");
+		if (StringUtil.isNotEmpty(context) && context.contains("{")&&!isAnountion) {
 			return true;
 		}
 		return false;
 	}
 
-	public static boolean isContainBranceRight(String context) {
-		if (StringUtil.isNotEmpty(context) && context.contains("}")&&!context.trim().startsWith("@")) {
+	public static boolean isContainBranceRight(String context, String lastLine) {
+		boolean isAnountion=context.trim().startsWith("@")&&!lastLine.endsWith("(")&&!lastLine.endsWith(",");
+		if (StringUtil.isNotEmpty(context) && context.contains("}")&&!isAnountion) {
 			return true;
 		}
 		return false;

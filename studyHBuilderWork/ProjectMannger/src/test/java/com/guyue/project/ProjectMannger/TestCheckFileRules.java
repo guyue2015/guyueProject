@@ -46,10 +46,10 @@ public class TestCheckFileRules
     	CheckExceptionOutRule rule1 = new CheckExceptionOutRule();
     	CheckMethodSizeRule methodSizeRule = new CheckMethodSizeRule();
     	List<Rule> testRulesList =new ArrayList<Rule>();
-//    	testRulesList.add(rule1);
+    	testRulesList.add(rule1);
     	testRulesList.add(methodSizeRule);
-    	String projectPathFileName = "E:\\guyue\\git\\Source\\easycommerce-management-api\\";
-//    	String projectPathFileName = "E:\\guyue\\ty_order_system\\source\\";
+//    	String projectPathFileName = "E:\\guyue\\git\\Source\\easycommerce-management-api\\";
+    	String projectPathFileName = "E:\\guyue\\ty_order_system\\source\\";
     	Path projectPath = FileSystems.getDefault().getPath(projectPathFileName);
     	CheckFileRules.checkRules(projectPath, testRulesList);
     }
