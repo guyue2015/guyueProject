@@ -67,9 +67,10 @@ public class CreateMybatiesConfig {
 		for(String tablesName:tablesNamesList){
 			if(tablesName.startsWith("t_")){				
 				voName = tablesName.replaceFirst("t_", "");
-			}
-			if(tablesName.startsWith("T_")){				
+			}if(tablesName.startsWith("T_")){				
 				voName = tablesName.replaceFirst("T_", "");
+			}else{
+				voName = tablesName;	
 			}
 			if(voName==null||voName==""){
 				continue;

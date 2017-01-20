@@ -31,7 +31,7 @@ public class TestCreateMybatiesConfigxml extends TestCase{
     /**
      * Rigourous Test :-)
      */
-    public void testCreateConfigApi()
+    public void CreateConfigApi()
     {
 //    	List<String> tablesNameList = new ArrayList<String>();
 //    	initApi(tablesNameList);
@@ -67,7 +67,7 @@ public class TestCreateMybatiesConfigxml extends TestCase{
     /**
      * Rigourous Test :-)
      */
-    public void testCreateConfigCommon()
+    public void CreateConfigCommon()
     {
     	List<String> tablesNameList = new ArrayList<String>();
     	initCommon(tablesNameList);
@@ -102,5 +102,48 @@ public class TestCreateMybatiesConfigxml extends TestCase{
 	private void initApi(List<String> tablesNameList) {
 		tablesNameList.add("t_project_inteface");
 		tablesNameList.add("t_project_params");
+	}
+	 /**
+     * Rigourous Test :-)
+     */
+    public void testCreateConfigYouxinRc()
+    {
+    	List<String> tablesNameList = new ArrayList<String>();
+    	initYouxinRc(tablesNameList);
+       MybatiesConfigVo mybatiesConfigVo = new MybatiesConfigVo();
+       mybatiesConfigVo.setDbJdbcJarPath("E:\\guyue\\project\\maven3.1\\repository\\mysql\\mysql-connector-java\\5.1.31\\mysql-connector-java-5.1.31.jar");
+       mybatiesConfigVo.setDbDriver("com.mysql.jdbc.Driver");
+       mybatiesConfigVo.setDbUrl("jdbc:mysql://192.168.17.128/youxin_rc?useUnicode=true&amp;characterEncoding=UTF-8");
+       mybatiesConfigVo.setDbUserName("ec");
+       mybatiesConfigVo.setDbPassword("ec");
+       mybatiesConfigVo.setTargetProjectName("rc-api");
+       mybatiesConfigVo.setMapperPackagePath("com.creditpomelo.rc.api.mapping");
+       mybatiesConfigVo.setVoPackagePath("com.creditpomelo.rc.api.entity");
+       mybatiesConfigVo.setTableNamesList(tablesNameList);
+       mybatiesConfigVo.setDaoPackagePath("com.creditpomelo.rc.api.repository");
+       mybatiesConfigVo.setResultConfigxmlPath("E:\\guyue\\rc\\Source\\rc-api\\src\\main\\java\\com\\creditpomelo\\rc\\api\\mybaties-generator-config.xml");
+       CreateMybatiesConfig.createMybatiesConfig(mybatiesConfigVo);
+    }
+
+	private void initYouxinRc(List<String> tablesNameList) {
+		tablesNameList.add("rc_blacklist_user");
+		tablesNameList.add("rc_dic");
+		tablesNameList.add("rc_dic_detail");
+		tablesNameList.add("rc_geo_ip");
+		tablesNameList.add("rc_hit_rules");
+		tablesNameList.add("rc_partner_busi");
+		tablesNameList.add("rc_partner_info");
+		tablesNameList.add("rc_permission");
+		tablesNameList.add("rc_policy_set");
+		tablesNameList.add("rc_rec_busi");
+		tablesNameList.add("rc_rec_srv");
+		tablesNameList.add("rc_req_attach");
+		tablesNameList.add("rc_req_base");
+		tablesNameList.add("rc_req_contacts");
+		tablesNameList.add("rc_res_base");
+		tablesNameList.add("rc_role");
+		tablesNameList.add("rc_role_perm");
+		tablesNameList.add("rc_sys_user");
+		tablesNameList.add("rc_user_role");
 	}
 }

@@ -32,10 +32,20 @@ public class TestReNameMapper extends TestCase{
      * Rigourous Test :-)
      * @throws IOException 
      */
-    public void testReName() throws IOException
+    public void ReName() throws IOException
     {
     	Path mappingPath = FileSystems.getDefault().getPath("C:\\guyue\\gitForme\\studyHBuilderWork\\ApiSpeed\\src\\main\\java\\com\\guyue\\apispeed\\mapping");
     	Path daoPath = FileSystems.getDefault().getPath("C:\\guyue\\gitForme\\studyHBuilderWork\\ApiSpeed\\src\\main\\java\\com\\guyue\\apispeed\\dao");
+    	ReNameMapper.reNameMapperJavaFiles(mappingPath, daoPath);
+    }
+    /**
+     * Rigourous Test :-)
+     * @throws IOException 
+     */
+    public void testReYouxinRcDaoName() throws IOException
+    {
+    	Path mappingPath = FileSystems.getDefault().getPath("E:\\guyue\\rc\\Source\\rc-api\\src\\main\\java\\com\\creditpomelo\\rc\\api\\mapping");
+    	Path daoPath = FileSystems.getDefault().getPath("E:\\guyue\\rc\\Source\\rc-api\\src\\main\\java\\com\\creditpomelo\\rc\\api\\repository");
     	ReNameMapper.reNameMapperJavaFiles(mappingPath, daoPath);
     }
 }
