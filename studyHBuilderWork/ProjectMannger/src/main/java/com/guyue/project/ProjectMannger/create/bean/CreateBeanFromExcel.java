@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.guyue.common.util.GuyueStringBuffer;
+import com.guyue.common.util.StringUtil;
 import com.guyue.common.util.office.ExcelUtil;
 
 public class CreateBeanFromExcel {
@@ -19,9 +20,10 @@ public class CreateBeanFromExcel {
 	  * @param excelPath
 	  * @param sheetIndex
 	 */
-	private static String propertyName_KEY ="propertyName";
-	private static String propertyType_KEY ="propertyType";
-	private static String propertyComment_KEY ="propertyComment";
+	public static String propertyName_KEY ="propertyName";
+	public static String propertyType_KEY ="propertyType";
+	public static String propertyComment_KEY ="propertyComment";
+	public static String propertyTestValue_KEY ="propertyTestValue";
 	
 	public static void createBeanFromExcel(Map<String,Integer> excelHeadDefine,boolean isContainFirstRow,Path excelPath,Integer sheetIndex){
 		Map<String, List> readDataExcel = ExcelUtil.readExcel(excelPath);
@@ -30,8 +32,11 @@ public class CreateBeanFromExcel {
 		String propertyName="";
 		String propertyType="";
 		String propertyComment="";
+		String propertyTestValue="";
 		GuyueStringBuffer propertySB = new GuyueStringBuffer();
 		GuyueStringBuffer propertyMethodSB = new GuyueStringBuffer();
+		GuyueStringBuffer propertyJsonTestStringSb = new GuyueStringBuffer();
+		propertyJsonTestStringSb.append("{");
 		for(int i=0;i<rowMapList.size();i++){
 			if(i==0&&!isContainFirstRow){
 				continue;
@@ -43,20 +48,44 @@ public class CreateBeanFromExcel {
 			propertyType = rowMap.get(""+excelHeadDefine.get(propertyType_KEY));
 			
 			propertyComment = rowMap.get(""+excelHeadDefine.get(propertyComment_KEY));
+			propertyTestValue = rowMap.get(""+excelHeadDefine.get(propertyTestValue_KEY));
+			appendJsonTestValue(propertyJsonTestStringSb, propertyName, propertyType, propertyComment,propertyTestValue);
 			appendProperty(propertySB,propertyName,propertyType,propertyComment);
 			appendMethod(propertyMethodSB,propertyName,propertyType,propertyComment);
 		}
+		if(propertyJsonTestStringSb.toString().endsWith(",")){
+			propertyJsonTestStringSb.deleteCharAt(propertyJsonTestStringSb.length()-1);
+		}
+		propertyJsonTestStringSb.append("}");
+		System.out.println(propertyJsonTestStringSb.toString());
 		System.out.println(propertySB.toString());
 		System.out.println(propertyMethodSB.toString());
 	}
 
+	private static void appendJsonTestValue(
+			GuyueStringBuffer propertyJsonTestStringSb, String propertyName,
+			String propertyType, String propertyComment, String propertyTestValue) {
+		if(replace_AndFirstUp(propertyType,true).equals("String")){
+			propertyJsonTestStringSb.append("\"");
+			propertyJsonTestStringSb.append(propertyName);
+			propertyJsonTestStringSb.append("\":");
+			propertyJsonTestStringSb.append(StringUtil.isEmpty(propertyTestValue)?"\"\"":"\""+propertyTestValue+"\"");
+		}else if(replace_AndFirstUp(propertyType,true).equals("Integer")){
+			propertyJsonTestStringSb.append(propertyName+":"+propertyTestValue);
+		}else{
+			return;
+		}
+		propertyJsonTestStringSb.append(",");
+	}
+
 	private static void appendProperty(GuyueStringBuffer propertySB,
 			String propertyName, String propertyType, String propertyComment) {
-		propertyName = replace_AndFirstUp(propertyName,false);
+		String propertyNameTemp = replace_AndFirstUp(propertyName,false);
 		propertySB.appendln("/**");
 		propertySB.appendln(brockStr(propertyComment));
 		propertySB.appendln("*/");
-		propertySB.appendln("private "+replace_AndFirstUp(propertyType,true)+" "+propertyName+";");
+		propertySB.appendln("@SerializedName(\""+propertyName+"\")");
+		propertySB.appendln("private "+replace_AndFirstUp(propertyType,true)+" "+propertyNameTemp+";");
 	}
 
 	private static String brockStr(String propertyComment){

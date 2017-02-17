@@ -145,5 +145,6 @@ public class TestCreateMybatiesConfigxml extends TestCase{
 		tablesNameList.add("rc_role_perm");
 		tablesNameList.add("rc_sys_user");
 		tablesNameList.add("rc_user_role");
+		tablesNameList.add("rc_td_attribution");
 	}
 }

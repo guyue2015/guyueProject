@@ -41,10 +41,12 @@ public class TestCreateBeanFromExcel
     public void testCreateBeanFromExcel()
     {
     	Map<String,Integer>excelHeadDefine = new HashMap<String,Integer>();
-    	excelHeadDefine.put("propertyName", 0);
-    	excelHeadDefine.put("propertyType", 2);
-    	excelHeadDefine.put("propertyComment", 3);
-    	String excelFile = "F:\\工作资料\\柚信科技工作记录\\20170118风控之同盾项目\\未捷请求参数路径.xlsx";
+    	excelHeadDefine.put(CreateBeanFromExcel.propertyName_KEY, 0);
+    	excelHeadDefine.put(CreateBeanFromExcel.propertyType_KEY, 2);
+    	excelHeadDefine.put(CreateBeanFromExcel.propertyComment_KEY, 3);
+    	excelHeadDefine.put(CreateBeanFromExcel.propertyTestValue_KEY, 4);
+//    	String excelFile = "F:\\工作资料\\柚信科技工作记录\\20170118风控之同盾项目\\未捷请求参数路径.xlsx";
+    	String excelFile = "F:\\工作资料\\柚信科技工作记录\\20170118风控之同盾项目\\数据认证测试数据.xlsx";
     	Integer sheetIndex=Integer.valueOf(0);
     	Path excelPath = FileSystems.getDefault().getPath(excelFile);
     	CreateBeanFromExcel.createBeanFromExcel(excelHeadDefine, false, excelPath,sheetIndex);
