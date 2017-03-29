@@ -36,10 +36,21 @@ public class TestCreateMySqlFromExcel
     /**
      * Rigourous Test :-)
      */
-    public void testCreateMysql()
+    public void CreateMysql()
     {
     	String excelFilePath= "F:\\studyProjectWork\\studyHBuilderWork\\项目数据库设计\\项目管理.xlsx";
     	String sqlFilePath = "F:\\studyProjectWork\\studyHBuilderWork\\sql";
+    	Path excelPath = FileSystems.getDefault().getPath(excelFilePath);
+    	Path sqlPath = FileSystems.getDefault().getPath(sqlFilePath);
+    	CreateMySQLFromExcel.createMysqlFromExcel(excelPath, sqlPath);
+    }
+    /**
+     * Rigourous Test :-)
+     */
+    public void testCreateMysqlForYouxinPay()
+    {
+    	String excelFilePath= "F:\\工作资料\\柚信科技工作记录\\20170220企业支付项目开发\\管理员审核相关表设计.xlsx";
+    	String sqlFilePath = "F:\\工作资料\\柚信科技工作记录\\20170220企业支付项目开发\\sql";
     	Path excelPath = FileSystems.getDefault().getPath(excelFilePath);
     	Path sqlPath = FileSystems.getDefault().getPath(sqlFilePath);
     	CreateMySQLFromExcel.createMysqlFromExcel(excelPath, sqlPath);
