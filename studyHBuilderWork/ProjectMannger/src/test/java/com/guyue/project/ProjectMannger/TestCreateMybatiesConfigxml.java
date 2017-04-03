@@ -106,7 +106,7 @@ public class TestCreateMybatiesConfigxml extends TestCase{
 	 /**
      * Rigourous Test :-)
      */
-    public void testCreateConfigYouxinRc()
+    public void CreateConfigYouxinRc()
     {
     	List<String> tablesNameList = new ArrayList<String>();
     	initYouxinRc(tablesNameList);
@@ -146,5 +146,50 @@ public class TestCreateMybatiesConfigxml extends TestCase{
 		tablesNameList.add("rc_sys_user");
 		tablesNameList.add("rc_user_role");
 		tablesNameList.add("rc_td_attribution");
+	}
+	 /**
+     * Rigourous Test :-)
+     */
+    public void testCreateConfigSsls()
+    {
+    	List<String> tablesNameList = new ArrayList<String>();
+    	initSsls(tablesNameList);
+       MybatiesConfigVo mybatiesConfigVo = new MybatiesConfigVo();
+       mybatiesConfigVo.setDbJdbcJarPath("E:\\guyue\\project\\maven3.1\\repository\\mysql\\mysql-connector-java\\5.1.31\\mysql-connector-java-5.1.31.jar");
+       mybatiesConfigVo.setDbDriver("com.mysql.jdbc.Driver");
+       mybatiesConfigVo.setDbUrl("jdbc:mysql://192.168.17.128/ssls?useUnicode=true&amp;characterEncoding=UTF-8");
+       mybatiesConfigVo.setDbUserName("ec");
+       mybatiesConfigVo.setDbPassword("ec");
+       mybatiesConfigVo.setTargetProjectName("ssls-mapi");
+       mybatiesConfigVo.setMapperPackagePath("com.creditpomelo.rc.mapi.mapping");
+       mybatiesConfigVo.setVoPackagePath("com.creditpomelo.rc.mapi.entity");
+       mybatiesConfigVo.setTableNamesList(tablesNameList);
+       mybatiesConfigVo.setDaoPackagePath("com.creditpomelo.rc.mapi.repository");
+       mybatiesConfigVo.setResultConfigxmlPath("E:\\guyue\\ssls\\Source\\ssls-mapi\\src\\main\\java\\com\\creditpomelo\\rc\\mapi\\mybaties-generator-config.xml");
+       CreateMybatiesConfig.createMybatiesConfig(mybatiesConfigVo);
+    }
+
+	private void initSsls(List<String> tablesNameList) {
+		tablesNameList.add("customer");
+		tablesNameList.add("disbursement_task");
+		tablesNameList.add("loan_application");
+		tablesNameList.add("loan_application_process");
+		tablesNameList.add("loan_appointment");
+		tablesNameList.add("loan_post_lending_checkup");
+		tablesNameList.add("media_structure");
+		tablesNameList.add("product");
+		tablesNameList.add("repayment_task");
+		tablesNameList.add("risk_phone_check");
+//		tablesNameList.add("sys_dict");
+//		tablesNameList.add("sys_dict_detail");
+//		tablesNameList.add("sys_group");
+//		tablesNameList.add("sys_org");
+//		tablesNameList.add("sys_org_user");
+//		tablesNameList.add("sys_permission");
+//		tablesNameList.add("sys_role");
+//		tablesNameList.add("sys_role_permission");
+//		tablesNameList.add("sys_user");
+//		tablesNameList.add("sys_user_group");
+//		tablesNameList.add("sys_user_role");
 	}
 }

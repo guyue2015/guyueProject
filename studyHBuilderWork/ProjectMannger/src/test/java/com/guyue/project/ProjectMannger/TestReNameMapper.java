@@ -42,10 +42,10 @@ public class TestReNameMapper extends TestCase{
      * Rigourous Test :-)
      * @throws IOException 
      */
-    public void testReYouxinRcDaoName() throws IOException
+    public void testReSslsRcDaoName() throws IOException
     {
-    	Path mappingPath = FileSystems.getDefault().getPath("E:\\guyue\\rc\\Source\\rc-api\\src\\main\\java\\com\\creditpomelo\\rc\\api\\mapping");
-    	Path daoPath = FileSystems.getDefault().getPath("E:\\guyue\\rc\\Source\\rc-api\\src\\main\\java\\com\\creditpomelo\\rc\\api\\repository");
+    	Path mappingPath = FileSystems.getDefault().getPath("E:\\guyue\\ssls\\Source\\ssls-mapi\\src\\main\\java\\com\\creditpomelo\\rc\\mapi\\mapping");
+    	Path daoPath = FileSystems.getDefault().getPath("E:\\guyue\\ssls\\Source\\ssls-mapi\\src\\main\\java\\com\\creditpomelo\\rc\\mapi\\repository");
     	ReNameMapper.reNameMapperJavaFiles(mappingPath, daoPath);
     }
 }
