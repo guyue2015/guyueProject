@@ -53,6 +53,17 @@ public class FileUtil {
 		return filePath;
 	}
 	/**
+	 * 将字符串转为Path
+	  * @Title: getPraseFileStrToPath 
+	  * @Description: 
+	  * @param fileDir
+	  * @return
+	 */
+	public static Path getPraseFileStrToPath(String fileDir){
+		Path filePath = FileSystems.getDefault().getPath(fileDir);
+		return filePath;
+	}
+	/**
 	 * 删除空文件夹或者文件
 	 * 文件夹为空文件夹才能删除成功
 	 * @param filePath

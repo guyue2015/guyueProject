@@ -73,21 +73,21 @@ public class CreateMySQLFromExcel {
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	public static Map<String, ExcelTables> readExcel(Path excelPath) {
 		Map<String, ExcelTables> excelTablesMap = new HashMap<String, ExcelTables>();
-		Map<String, List> readExcel = ExcelUtil.readExcel(excelPath);
+		Map<Integer, List<Map<Integer, String>>> readExcel = ExcelUtil.readExcel(excelPath);
 		ExcelTables excelTables = null;
-		for (Entry<String, List> entry : readExcel.entrySet()) {
-			String sheetIndex = entry.getKey();
-			List<Map<String, String>> excelList = (List<Map<String, String>>) entry
+		for (Entry<Integer, List<Map<Integer, String>>> entry : readExcel.entrySet()) {
+			Integer sheetIndex = entry.getKey();
+			List<Map<Integer, String>> excelList = (List<Map<Integer, String>>) entry
 					.getValue();
-			for (Map<String, String> excelDataMap : excelList) {
-				if ("tableid".equalsIgnoreCase(excelDataMap.get("0"))) {// 跳过第一行
+			for (Map<Integer, String> excelDataMap : excelList) {
+				if ("tableid".equalsIgnoreCase(excelDataMap.get(0))) {// 跳过第一行
 					continue;
 				}
-				if (excelTablesMap.containsKey(excelDataMap.get("0"))) {
-					excelTables = excelTablesMap.get(excelDataMap.get("0"));
+				if (excelTablesMap.containsKey(excelDataMap.get(0))) {
+					excelTables = excelTablesMap.get(excelDataMap.get(0));
 				} else {
-					excelTables = new ExcelTables(excelDataMap.get("0"));
-					excelTablesMap.put(excelDataMap.get("0"), excelTables);
+					excelTables = new ExcelTables(excelDataMap.get(0));
+					excelTablesMap.put(excelDataMap.get(0), excelTables);
 				}
 				if (DB_EXCEL_SHEET_INDEX_TABLES.equals(sheetIndex)) {
 					praseTables(excelTables, excelDataMap);
@@ -102,8 +102,8 @@ public class CreateMySQLFromExcel {
 		return excelTablesMap;
 	}
 	private static void praseTablesData(ExcelTables excelTables,
-			Map<String, String> excelDataMap) {
-		if(excelDataMap.containsKey("1")&&"1".equals(excelDataMap.get("1"))){
+			Map<Integer, String> excelDataMap) {
+		if(excelDataMap.containsKey(1)&&"1".equals(excelDataMap.get(1))){
 			excelTables.setInitDateColumn(excelDataMap);
 		}else{
 			excelTables.getInitDate().add(excelDataMap);
@@ -112,17 +112,17 @@ public class CreateMySQLFromExcel {
 		excelDataMap.remove("1");
 	}
 	private static void praseTablesColumn(ExcelTables excelTables,
-			Map<String, String> excelDataMap) {
+			Map<Integer, String> excelDataMap) {
 		String comments = "";
-		if (excelDataMap.containsKey("4")) {
-			comments+=excelDataMap.get("4");
+		if (excelDataMap.containsKey(4)) {
+			comments+=excelDataMap.get(4);
 		}
-		if (excelDataMap.containsKey("5")) {
-			comments+=excelDataMap.get("5");
+		if (excelDataMap.containsKey(5)) {
+			comments+=excelDataMap.get(5);
 		}
 		GuyueStringBuffer sql = new GuyueStringBuffer();
-		sql.append("        "+excelDataMap.get("2")+"  "+excelDataMap.get("3"));
-		if("id".equalsIgnoreCase(excelDataMap.get("2"))){
+		sql.append("        "+excelDataMap.get(2)+"  "+excelDataMap.get(3));
+		if("id".equalsIgnoreCase(excelDataMap.get(2))){
 			sql.append("  NOT NULL AUTO_INCREMENT  ");
 		}
 		if(StringUtil.isNotEmpty(comments)){
@@ -132,9 +132,9 @@ public class CreateMySQLFromExcel {
 		excelTables.getColumnCreateTableSql().add(sql.toString());
 	}
 	private static void praseTables(ExcelTables excelTables,
-			Map<String, String> excelDataMap) {
-		excelTables.setTableDb(excelDataMap.get("1"));
-		excelTables.setTableName(excelDataMap.get("2"));
+			Map<Integer, String> excelDataMap) {
+		excelTables.setTableDb(excelDataMap.get(1));
+		excelTables.setTableName(excelDataMap.get(2));
 	}
 
 }

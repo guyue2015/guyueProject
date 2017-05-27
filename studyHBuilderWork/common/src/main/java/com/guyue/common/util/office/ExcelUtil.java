@@ -38,22 +38,22 @@ public class ExcelUtil {
 	 * @param excelPath
 	 * @return
 	 */
-	@SuppressWarnings({ "unused", "rawtypes" })
-	public static Map<String,List> readExcel(Path excelPath){
-		Map<String,List> workBookMap = new HashMap<String, List>();
-		List<Map<String,String>> excelDataList = null;
-		Map<String,String> rowMap = null;
+	@SuppressWarnings({ "unused" })
+	public static Map<Integer,List<Map<Integer,String>>> readExcel(Path excelPath){
+		Map<Integer,List<Map<Integer,String>>> workBookMap = new HashMap<Integer, List<Map<Integer,String>>>();
+		List<Map<Integer,String>> excelDataList = null;
+		Map<Integer,String> rowMap = null;
 		try {
 			InputStream excelInStream = Files.newInputStream(excelPath,StandardOpenOption.READ);
 			Workbook workbook = getWorkBook(excelPath);
 			int sheetNum = workbook.getNumberOfSheets();
 			for(int i=0;i<sheetNum;i++){
-				excelDataList = new ArrayList<Map<String,String>>();
+				excelDataList = new ArrayList<Map<Integer,String>>();
 				Sheet sheetAt = workbook.getSheetAt(i);
 				int rowNum = sheetAt.getPhysicalNumberOfRows();
 				for(int j=0;j<rowNum;j++){
 					Row row = sheetAt.getRow(j);
-					rowMap = new TreeMap<String, String>();
+					rowMap = new TreeMap<Integer, String>();
 					if(row==null){
 						continue;
 					}
@@ -64,12 +64,12 @@ public class ExcelUtil {
 							if(cell.getCellType()!=Cell.CELL_TYPE_STRING){
 								cell.setCellType(Cell.CELL_TYPE_STRING);
 							}
-							rowMap.put(""+k,StringUtil.praseNullString(cell.getStringCellValue()));
+							rowMap.put(k,StringUtil.praseNullString(cell.getStringCellValue()));
 						}
 					}
 					excelDataList.add(rowMap);
 				}
-				workBookMap.put(""+i, excelDataList);
+				workBookMap.put(i, excelDataList);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

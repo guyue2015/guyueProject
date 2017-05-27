@@ -26,9 +26,9 @@ public class CreateBeanFromExcel {
 	public static String propertyTestValue_KEY ="propertyTestValue";
 	
 	public static void createBeanFromExcel(Map<String,Integer> excelHeadDefine,boolean isContainFirstRow,Path excelPath,Integer sheetIndex){
-		Map<String, List> readDataExcel = ExcelUtil.readExcel(excelPath);
-		List<Map<String,String>> rowMapList = readDataExcel.get(sheetIndex.toString());
-		Map<String, String> rowMap=null;
+		Map<Integer, List<Map<Integer, String>>> readDataExcel = ExcelUtil.readExcel(excelPath);
+		List<Map<Integer, String>> rowMapList = readDataExcel.get(sheetIndex.toString());
+		Map<Integer, String> rowMap=null;
 		String propertyName="";
 		String propertyType="";
 		String propertyComment="";

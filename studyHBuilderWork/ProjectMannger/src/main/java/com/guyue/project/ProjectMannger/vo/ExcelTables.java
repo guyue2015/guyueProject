@@ -13,8 +13,8 @@ public class ExcelTables {
 	private String tableDb;
 	private String tableName;
 	List<String> columnCreateTableSql;
-	List<Map<String,String>> initDate;
-	Map<String,String> initDateColumn;
+	List<Map<Integer,String>> initDate;
+	Map<Integer,String> initDateColumn;
 	public ExcelTables(String tableId){
 		this.tableId=tableId;
 	}
@@ -42,20 +42,20 @@ public class ExcelTables {
 	public void setColumnCreateTableSql(List<String> columnCreateTableSql) {
 		this.columnCreateTableSql = columnCreateTableSql;
 	}
-	public List<Map<String, String>> getInitDate() {
+	public List<Map<Integer, String>> getInitDate() {
 		if(initDate==null){
-			initDate = new ArrayList<Map<String,String>>();
+			initDate = new ArrayList<Map<Integer,String>>();
 		}
 		return initDate;
 	}
-	public void setInitDate(List<Map<String, String>> initDate) {
+	public void setInitDate(List<Map<Integer, String>> initDate) {
 		this.initDate = initDate;
 	}
-	public Map<String, String> getInitDateColumn() {
+	public Map<Integer, String> getInitDateColumn() {
 		return initDateColumn;
 	}
-	public void setInitDateColumn(Map<String, String> initDateColumn) {
-		this.initDateColumn = initDateColumn;
+	public void setInitDateColumn(Map<Integer, String> excelDataMap) {
+		this.initDateColumn = excelDataMap;
 	}
 	/**
 	 * 获取建表语句
@@ -79,7 +79,7 @@ public class ExcelTables {
 			return null;
 		}
 		GuyueStringBuffer initDataSql = new GuyueStringBuffer();
-		for(Map<String,String> insertData:initDate){
+		for(Map<Integer,String> insertData:initDate){
 			initDataSql.append("INSERT INTO "+this.getTableName()+"(");
 			for(String columnName:initDateColumn.values()){
 				initDataSql.append(""+columnName);
@@ -87,7 +87,7 @@ public class ExcelTables {
 			}
 			initDataSql.deleteCharAt(initDataSql.length()-1);
 			initDataSql.append(") VALUES(");
-			for(Entry<String,String> entry:initDateColumn.entrySet()){
+			for(Entry<Integer,String> entry:initDateColumn.entrySet()){
 				String columnName = entry.getValue();
 				if(columnName.startsWith("c_")||columnName.startsWith("C_")){
 					initDataSql.append("'");
