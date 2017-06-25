@@ -53,6 +53,7 @@ public class FileUtil {
 		return filePath;
 	}
 	/**
+<<<<<<< Updated upstream
 	 * 将字符串转为Path
 	  * @Title: getPraseFileStrToPath 
 	  * @Description: 
@@ -62,6 +63,14 @@ public class FileUtil {
 	public static Path getPraseFileStrToPath(String fileDir){
 		Path filePath = FileSystems.getDefault().getPath(fileDir);
 		return filePath;
+=======
+	 * 将文件路径转为Path
+	 * @param fileName
+	 * @return
+	 */
+	public static Path getPath(String fileName){
+		return  FileSystems.getDefault().getPath(fileName);
+>>>>>>> Stashed changes
 	}
 	/**
 	 * 删除空文件夹或者文件
@@ -158,6 +167,27 @@ public class FileUtil {
 		}
 	}
 	/**
+	 * 获取指定后缀名称的文件
+	 * @param filePath
+	 * @param subPathList
+	 * @param end
+	 */
+	public static void getSubPathByEnd(Path filePath,List<Path> subPathList,String end){
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(filePath)) {
+			  for (Path entry: stream) {
+					  if(Files.isDirectory(entry)){
+						  getSubPath(entry,subPathList);
+					  }else{
+						  if(entry.toString().endsWith(end)){
+							  subPathList.add(entry);
+						  }
+					  }
+			      }
+		} catch (Exception e) {
+			logger.error("获取子文件失败，文件路径是:"+filePath,e);
+		}
+	}
+	/**
 	 * 判断指定filePath是否存在
 	  * @Title: exists 
 	  * @Description: 
@@ -165,6 +195,17 @@ public class FileUtil {
 	  * @return
 	 */
 	public static boolean exists(Path filePath){
+		return Files.exists(filePath);
+	}
+	/**
+	 * 判断指定filePath是否存在
+	  * @Title: exists 
+	  * @Description: 
+	  * @param filePath
+	  * @return
+	 */
+	public static boolean exists(String fileName){
+		Path filePath = FileSystems.getDefault().getPath(fileName);
 		return Files.exists(filePath);
 	}
 	public static void writeFile(String fileName, String sb) {
