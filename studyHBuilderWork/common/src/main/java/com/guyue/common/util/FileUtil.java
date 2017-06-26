@@ -53,7 +53,7 @@ public class FileUtil {
 		return filePath;
 	}
 	/**
-<<<<<<< Updated upstream
+	 * Updated upstream
 	 * 将字符串转为Path
 	  * @Title: getPraseFileStrToPath 
 	  * @Description: 
@@ -63,14 +63,6 @@ public class FileUtil {
 	public static Path getPraseFileStrToPath(String fileDir){
 		Path filePath = FileSystems.getDefault().getPath(fileDir);
 		return filePath;
-=======
-	 * 将文件路径转为Path
-	 * @param fileName
-	 * @return
-	 */
-	public static Path getPath(String fileName){
-		return  FileSystems.getDefault().getPath(fileName);
->>>>>>> Stashed changes
 	}
 	/**
 	 * 删除空文件夹或者文件

@@ -72,15 +72,9 @@ public class ExcelUtil {
 	 * @param excelPath
 	 * @return
 	 */
-<<<<<<< Updated upstream
-	@SuppressWarnings({ "unused" })
-	public static Map<Integer,List<Map<Integer,String>>> readExcel(Path excelPath){
-		Map<Integer,List<Map<Integer,String>>> workBookMap = new HashMap<Integer, List<Map<Integer,String>>>();
-=======
 	@SuppressWarnings({ "unused", "rawtypes" })
-	public static Map<Integer,List> readExcel(Path excelPath){
-		Map<Integer,List> workBookMap = new HashMap<Integer, List>();
->>>>>>> Stashed changes
+	public static Map<Integer, List<Map<Integer, String>>> readExcel(Path excelPath){
+		Map<Integer,List<Map<Integer, String>>> workBookMap = new HashMap<Integer, List<Map<Integer, String>>>();
 		List<Map<Integer,String>> excelDataList = null;
 		Map<Integer,String> rowMap = null;
 		try {

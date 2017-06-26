@@ -2,11 +2,14 @@ package com.guyue.project.ProjectMannger;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.springframework.util.CollectionUtils;
 
 import com.guyue.common.util.FileUtil;
 import com.guyue.common.util.office.ExcelUtil;
@@ -14,6 +17,7 @@ import com.guyue.common.util.office.ExcelUtil;
 public class TestBank {
 	public static void main(String[] args) {
 		List<Bank> bankList = new ArrayList<Bank>(); 
+		List<Bank> bankListNew = new ArrayList<Bank>(); 
 		Set<String> bankname = new HashSet<String>();
 		String excelPath = "F:/工作资料/柚信科技工作记录/20170515钱包相关内容/卡bin-cardbin.xls";
 		Path path = FileUtil.getPraseFileStrToPath(excelPath);
@@ -32,7 +36,7 @@ public class TestBank {
 				bankList.add(bank);
 			}
 		}
-		System.out.println(bankname);
+		System.out.println("========");
 		for(Bank bank:bankList){
 			if(bank.getBankName().contains("北京银行")){
 				bank.setBankId(1);
@@ -62,13 +66,16 @@ public class TestBank {
 				bank.setBankId(13);
 			}
 			if(bank.getBankId()!=null){
-				System.out.println(bank.getInsertSql());
+				bankListNew.add(bank);
 			}
 		}
-//		System.out.println(bankList);
+		Collections.sort(bankListNew);
+		for(Bank bank:bankListNew){
+			System.out.println(bank.getInsertSql());
+		}
 	}
 }
-class Bank {
+class Bank implements Comparable{
 	private Integer bankId;
 	private String insertSql;
 	private String bankName;
@@ -130,5 +137,10 @@ class Bank {
 	}
 	public void setInsertSql(String insertSql) {
 		this.insertSql = insertSql;
+	}
+	@Override
+	public int compareTo(Object o) {
+		Bank b = (Bank)o;
+		return this.getBankId()-b.getBankId();
 	}
 }
