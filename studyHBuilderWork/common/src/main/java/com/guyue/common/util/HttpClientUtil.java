@@ -89,6 +89,45 @@ public class HttpClientUtil {
 		}
 		return str;
 	}
+	/**
+	 * httpGet
+	 * 
+	 * @param url
+	 * @param headerParams
+	 * @param requestParams
+	 * @return
+	 */
+	public static String httpGet(String url) {
+
+		String str = null;
+		HttpGet httpGet = null;
+		HttpClient httpClient = HttpClientBuilder.create().build();// new DefaultHttpClient();
+
+		try {
+			httpGet = new HttpGet(url);
+			HttpResponse response = httpClient.execute(httpGet);
+			// reponse header
+			log.info(response.getStatusLine().getStatusCode());
+
+			Header[] headers = response.getAllHeaders();
+			for (Header header : headers) {
+				log.info(header.getName() + ": " + header.getValue());
+			}
+			// 网页内容
+			HttpEntity httpEntity = response.getEntity();
+			str = EntityUtils.toString(httpEntity);
+			log.info(str);
+		} catch (ClientProtocolException e) {
+			log.error(e);
+		} catch (IOException e) {
+			log.error(e);
+		} finally {
+			if (httpGet != null) {
+				httpGet.abort();
+			}
+		}
+		return str;
+	}
 
 	/**
 	 * httpPost
