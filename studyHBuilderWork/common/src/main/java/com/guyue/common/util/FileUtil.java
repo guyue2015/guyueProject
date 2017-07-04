@@ -215,4 +215,33 @@ public class FileUtil {
 			logger.error("写入文件失败，文件路径是:"+filePath,e);
 		}
 	}
+	/**
+	 * 批量写文件
+	  * @Title: writeFileList 
+	  * @Description: 
+	  * @param filePath
+	  * @param sb
+	 */
+	public static void writeFileList(Path filePath, List<String> sb) {
+		try {
+			Files.write(filePath, sb, Charset.defaultCharset());
+		} catch (IOException e) {
+			logger.error("写入文件失败，文件路径是:"+filePath,e);
+		}
+	}
+	/**
+	 * 批量写文件
+	  * @Title: writeFileList 
+	  * @Description: 
+	  * @param filePath
+	  * @param sb
+	 */
+	public static void writeFileList(String fileName, List<String> sb) {
+		try {
+			Path filePath = FileSystems.getDefault().getPath(fileName);
+			Files.write(filePath, sb, Charset.defaultCharset());
+		} catch (IOException e) {
+			logger.error("写入文件失败，文件路径是:"+fileName,e);
+		}
+	}
 }

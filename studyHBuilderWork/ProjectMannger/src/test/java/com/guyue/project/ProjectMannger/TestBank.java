@@ -8,35 +8,59 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.springframework.util.CollectionUtils;
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import com.guyue.common.util.FileUtil;
+import com.guyue.common.util.GuyueCollectionUtils;
 import com.guyue.common.util.office.ExcelUtil;
 
 public class TestBank {
+	public static TreeMap<String,Set<String>> bankCodeNameMap = new TreeMap<String, Set<String>>();
+	
+	private static List<String> bankInsertSql = new ArrayList<String>();
+	private static Map<String,Integer> codeIdsMap = new HashMap<String, Integer>();
 	public static void main(String[] args) {
+		
 		List<Bank> bankList = new ArrayList<Bank>(); 
 		List<Bank> bankListNew = new ArrayList<Bank>(); 
-		Set<String> bankname = new HashSet<String>();
 		String excelPath = "F:/工作资料/柚信科技工作记录/20170515钱包相关内容/卡bin-cardbin.xls";
 		Path path = FileUtil.getPraseFileStrToPath(excelPath);
 		Map<Integer,List<Map<Integer,String>>> readExcel = ExcelUtil.readExcel(path);
 		List<Map<Integer,String>> sheetMap0 = readExcel.get(0);
+		bankCodeNameMap.clear();
+		bankInsertSql.clear();
+		codeIdsMap.clear();
 		for(Map<Integer,String> tempMap:sheetMap0){
-			if(tempMap.containsKey(15)&&"借记卡".equals(tempMap.get(15))){
+//			GuyueCollectionUtils.printlnMap(tempMap);
+			if(tempMap.containsKey(5)&&"借记卡".equals(tempMap.get(5))){
 				Bank bank = new Bank();
-				String[] split = tempMap.get(0).replace("\n", "").split("\\(");
-				bankname.add(split[0]);
-				bank.setBankName(split[0]);
-				bank.setBankCode(split[1].replace(")", ""));
-				bank.setCardLength(Integer.valueOf(tempMap.get(8)));
-				bank.setPrefixLength(Integer.valueOf(tempMap.get(12)));
-				bank.setPrefix(tempMap.get(13));
+//				String[] split = tempMap.get(0).replace("\n", "").split("\\(");
+//				bankname.add(split[0]);
+//				bank.setBankName(split[0]);
+//				bank.setBankCode(split[1].replace(")", ""));
+				setBankNameAndCode(tempMap.get(0).replace("\n", ""),bank);
+				bank.setCardLength(Integer.valueOf(tempMap.get(1)));
+				bank.setPrefixLength(Integer.valueOf(tempMap.get(3)));
+				bank.setPrefix(tempMap.get(4));
 				bankList.add(bank);
-			}
+			} 
 		}
 		System.out.println("========");
+//		INSERT INTO everest.support_bank (id, bank_name, create_time, is_support, bank_code)VALUES (1, '北京银行', now(), 0, NULL);
+		Integer id = 1;
+		for(String keyMap:bankCodeNameMap.keySet()){
+			Set<String> set = bankCodeNameMap.get(keyMap);
+			java.util.Iterator<String> it = set.iterator();
+				it.hasNext();
+				String valueName = it.next();
+			String sql = "INSERT INTO everest.support_bank (id, bank_name, create_time, is_support, bank_code)VALUES ("+id+", '"+valueName+"', now(), 0, '"+keyMap+"');";
+			bankInsertSql.add(sql);
+			id++;
+		}
 		for(Bank bank:bankList){
 			if(bank.getBankName().contains("北京银行")){
 				bank.setBankId(1);
@@ -71,9 +95,33 @@ public class TestBank {
 		}
 		Collections.sort(bankListNew);
 		for(Bank bank:bankListNew){
-			System.out.println(bank.getInsertSql());
+//			System.out.println(bank.getInsertSql());
+		}
+		System.out.println("==============");
+//		GuyueCollectionUtils.printlnList(bankInsertSql);
+//		GuyueCollectionUtils.printlnMap(bankCodeNameMap);
+		FileUtil.writeFileList("F:\\insertSql.txt",bankInsertSql);
+	}
+
+	private static void setBankNameAndCode(String bangNameString, Bank bank) {
+		Pattern pattern = Pattern.compile("\\(\\d+\\)");
+		Matcher matcher = pattern.matcher(bangNameString);
+		if(matcher.find()){
+			String bankCode = matcher.group();
+			String bankName = bangNameString.replace(bankCode, "");
+			bankCode = bankCode.replace("(", "").replace(")", "");
+			bank.setBankCode(bankCode);
+			bank.setBankName(bankName);
+			if(bankCodeNameMap.containsKey(bankCode)){
+				bankCodeNameMap.get(bankCode).add(bankName);
+			}else{
+				Set<String> bankNameSet = new HashSet<String>();
+				bankNameSet.add(bankName);
+				bankCodeNameMap.put(bankCode, bankNameSet);
+			}
 		}
 	}
+	
 }
 class Bank implements Comparable{
 	private Integer bankId;
@@ -83,6 +131,8 @@ class Bank implements Comparable{
 	private Integer cardLength;
 	private Integer prefixLength;
 	private String prefix;
+	private Integer type;
+	private Integer isSupport;
 	public String getBankName() {
 		return bankName;
 	}
@@ -114,6 +164,18 @@ class Bank implements Comparable{
 		this.prefix = prefix;
 	}
 	
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
+	}
+	public Integer getIsSupport() {
+		return isSupport;
+	}
+	public void setIsSupport(Integer isSupport) {
+		this.isSupport = isSupport;
+	}
 	@Override
 	public String toString() {
 		return this.getBankName()+":"+this.getBankCode()+":"+this.getPrefix();
@@ -124,6 +186,7 @@ class Bank implements Comparable{
 	public void setBankId(Integer bankId) {
 		this.bankId = bankId;
 	}
+	
 	public String getInsertSql() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("INSERT INTO everest.bank_card_rule (bank_card_prefix, support_bank_id, create_time, prefix_length, card_length, bank_code) VALUES (");
