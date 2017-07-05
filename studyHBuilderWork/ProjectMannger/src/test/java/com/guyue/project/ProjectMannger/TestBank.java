@@ -99,8 +99,8 @@ public class TestBank {
 		}
 		System.out.println("==============");
 //		GuyueCollectionUtils.printlnList(bankInsertSql);
-//		GuyueCollectionUtils.printlnMap(bankCodeNameMap);
-		FileUtil.writeFileList("F:\\insertSql.txt",bankInsertSql);
+		GuyueCollectionUtils.printlnMap(bankCodeNameMap);
+//		FileUtil.writeFileList("F:\\insertSql.txt",bankInsertSql);
 	}
 
 	private static void setBankNameAndCode(String bangNameString, Bank bank) {
