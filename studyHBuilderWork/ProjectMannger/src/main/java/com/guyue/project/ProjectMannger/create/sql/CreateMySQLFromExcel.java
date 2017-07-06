@@ -17,15 +17,15 @@ public class CreateMySQLFromExcel {
 	/**
 	 * excel sheeet tables index 0
 	 */
-	private static String DB_EXCEL_SHEET_INDEX_TABLES = "0";
+	private static Integer DB_EXCEL_SHEET_INDEX_TABLES = Integer.valueOf(0);
 	/**
 	 * excel sheeet tablescolumn index 1
 	 */
-	private static String DB_EXCEL_SHEET_INDEX_TABLES_COLUMNS = "1";
+	private static Integer DB_EXCEL_SHEET_INDEX_TABLES_COLUMNS = Integer.valueOf(1);
 	/**
 	 * excel sheeet tablesdata index 2
 	 */
-	private static String DB_EXCEL_SHEET_INDEX_TABLES_DATA = "2";
+	private static Integer DB_EXCEL_SHEET_INDEX_TABLES_DATA = Integer.valueOf(2);
 
 	public static void createMysqlFromExcel(Path excelPath, Path sqlPath) {
 		Map<String, ExcelTables> readDbSqls = readExcel(excelPath);
@@ -108,8 +108,8 @@ public class CreateMySQLFromExcel {
 		}else{
 			excelTables.getInitDate().add(excelDataMap);
 		}
-		excelDataMap.remove("0");
-		excelDataMap.remove("1");
+		excelDataMap.remove(0);
+		excelDataMap.remove(1);
 	}
 	private static void praseTablesColumn(ExcelTables excelTables,
 			Map<Integer, String> excelDataMap) {
@@ -135,6 +135,7 @@ public class CreateMySQLFromExcel {
 			Map<Integer, String> excelDataMap) {
 		excelTables.setTableDb(excelDataMap.get(1));
 		excelTables.setTableName(excelDataMap.get(2));
+		excelTables.setTableDesc(excelDataMap.get(3));
 	}
 
 }

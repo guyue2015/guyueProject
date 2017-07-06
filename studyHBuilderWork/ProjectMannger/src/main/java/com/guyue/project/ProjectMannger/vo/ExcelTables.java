@@ -12,6 +12,7 @@ public class ExcelTables {
 	private String tableId;
 	private String tableDb;
 	private String tableName;
+	private String tableDesc;
 	List<String> columnCreateTableSql;
 	List<Map<Integer,String>> initDate;
 	Map<Integer,String> initDateColumn;
@@ -32,6 +33,13 @@ public class ExcelTables {
 	}
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
+	}
+	
+	public String getTableDesc() {
+		return tableDesc;
+	}
+	public void setTableDesc(String tableDesc) {
+		this.tableDesc = tableDesc;
 	}
 	public List<String> getColumnCreateTableSql() {
 		if(columnCreateTableSql==null){
@@ -71,7 +79,7 @@ public class ExcelTables {
 			createSql.appendln(columnCreateSql);
 		}
 		createSql.appendln("        PRIMARY KEY (id)");
-		createSql.appendln(") ENGINE=InnoDB DEFAULT CHARSET=utf8 ;");
+		createSql.appendln(") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '"+this.getTableDesc()+"';");
 		return createSql.toString();
 	}
 	public String getInitDataSql(){
@@ -89,15 +97,10 @@ public class ExcelTables {
 			initDataSql.append(") VALUES(");
 			for(Entry<Integer,String> entry:initDateColumn.entrySet()){
 				String columnName = entry.getValue();
-				if(columnName.startsWith("c_")||columnName.startsWith("C_")){
-					initDataSql.append("'");
-					initDataSql.append(StringUtil.praseNullString(insertData.get(entry.getKey())));
-					initDataSql.append("'");
-				}
-				if(columnName.startsWith("n_")||columnName.startsWith("N_")){
-					initDataSql.append(insertData.get(entry.getKey()));
-				}
-				initDataSql.append(",");
+			initDataSql.append("'");
+			initDataSql.append(StringUtil.praseNullString(insertData.get(entry.getKey())));
+			initDataSql.append("'");
+			initDataSql.append(",");
 			}
 			initDataSql.deleteCharAt(initDataSql.length()-1);
 			initDataSql.appendln(");");
