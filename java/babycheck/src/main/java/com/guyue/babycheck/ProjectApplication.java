@@ -1,4 +1,4 @@
-package com.guyue.ProjectMangerSpringBoot;
+package com.guyue.babycheck;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

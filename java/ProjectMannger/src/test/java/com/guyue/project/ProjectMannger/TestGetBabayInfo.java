@@ -39,25 +39,3 @@ public class TestGetBabayInfo {
 	
 }
 
-
-[{
-	 "BIRTHDAY":"2017-06-02",
-	 "EITEM":"PHE,TSH,17_a_OHP",
-	 "TARGET_MSMS":null,
-	 "TARGET_G6PD":null,
-	 "HOS":"阜南县人民医院",
-	 "PATIENTNAME":"刘红勤",
-	 "CONCLUSION_G6PD":null,
-	 "TARGET_17_A_OHP":"1.96",
-	 "CONCLUSION_PHE":"正常",
-	 "CONCLUSION_17AOHP":"正常",
-	 "SEX":"女",
-	 "COLLECTDATE":"2017-06-06",
-	 "BARCODESTRING":"17000098705",
-	 "TARGET_PHE":"0.9",
-	 "TARGET_TSH":"2.75",
-	 "CONCLUSION_MSMS":null,
-	 "CONCLUSION_TSH":"正常"
-		 }]
-
-
