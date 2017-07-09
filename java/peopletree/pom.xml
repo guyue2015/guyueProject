@@ -24,6 +24,40 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 	</dependencies>
+	<profiles>
+  	<profile>
+  		<id>guyue.local</id>
+			<properties>
+				<build.profile.product>guyue</build.profile.product>
+				<build.profile.env>local</build.profile.env>
+			</properties>
+  	</profile>
+  	<profile>
+  		<id>guyue.test</id>
+			<properties>
+				<build.profile.product>guyue</build.profile.product>
+				<build.profile.env>test</build.profile.env>
+			</properties>
+  	</profile>
+  </profiles>
+<build>
+  	<filters>
+			<filter>${project.basedir}/profiles/base.properties</filter>
+			<filter>${project.basedir}/profiles/${build.profile.product}/base.properties</filter>
+			<filter>${project.basedir}/profiles/${build.profile.product}/${build.profile.env}.properties</filter>
+	</filters>
+	<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+	</resources>
+	<testResources>
+		<testResource>
+			<directory>${project.basedir}/src/test/resources</directory>
+			<filtering>true</filtering>
+		</testResource>
+	</testResources>
 	 <plugins>
         <plugin>
             <groupId>org.springframework.boot</groupId>
@@ -40,4 +74,5 @@
             </executions>
         </plugin>
     </plugins>
+    </build>
 </project>
