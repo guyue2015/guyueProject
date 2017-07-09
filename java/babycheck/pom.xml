@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.guyue</groupId>
-	<artifactId>babaycheck</artifactId>
+	<artifactId>babycheck</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>babaycheck</name>
+	<name>babycheck</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
