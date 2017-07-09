@@ -1,0 +1,83 @@
+  <style>
+  	body{
+  		position:relative;
+  	}
+  	.userwrap{
+  		width:auto;
+  		height:auto;
+  		position:absolute;
+  		right:0;
+  		top:50px;
+  		z-index:1;
+  		background:#f8f8f8;
+  		border:1px solid #ebebeb;
+  		}
+  	.userwrap ul{
+  		margin-left: -34px;
+  		margin-right:5px;
+  	}
+  	.userwrap ul li{
+  		list-style: none;
+  		line-height: 14px;
+  		font-size: 12px;
+  		color:#337ab7;
+  	}
+  	.userwrap .span{
+  		font-size: 12px;
+  	}
+  	.userinfo{
+  		margin-right: 10px;
+  	}
+  	.nav_login{
+  		list-style: none;
+  	}
+  	.nav_login li {
+		    float:right;
+		    display: block;
+		    height: 56px;
+		    line-height: 60px;
+		    padding: 0px 6px;
+		}
+		
+		li {
+		    display: list-item;
+		    text-align: -webkit-match-parent;
+		}
+		.form-group label {
+		  width: 110px;
+		  text-align: right;
+		  padding-right: 10px;
+		}
+		.form-control {
+		  display: inline-block;
+		  width: auto;
+		}
+		.modal-footer {
+		  text-align: center;
+		}
+		.modal-body {
+		  padding-top: 5px;
+		}
+		.form-group {
+		  margin-top: 5px;
+		  margin-bottom: 5px;
+		}
+  </style>
+<div id="header-container" ng-controller="HeaderController">
+  <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="../" class="navbar-brand"><span class="glyphicon glyphicon-home"></span>首页</a>
+      </div>
+
+      <nav id="bs-navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+        
+          <li ><a href="#/quartz"><span class="glyphicon glyphicon-cog"></span>任务管理</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+</div>
+

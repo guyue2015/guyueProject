@@ -1,0 +1,21 @@
+<table class="table table-bordered table-hover tablecss-margin" >
+<thead>
+	<th>测试数据</th>
+	<th>测试数据1</th>
+	<th>测试数据3</th>
+	<th>测试数据4</th>
+	<th>操作</th>
+</thead>
+<tbody>
+	<tr ng-repeat="test in testList">
+		<td>{{test.test1}}</td>
+		<td>{{test.test2}}</td>
+		<td>{{test.test3}}</td>
+		<td>{{test.test4}}</td>
+		<td><a ng-click="modify(test)">修改</a>
+			 <a ng-click="delete(test)">删除</a>
+			 <a ng-click="fire(test)">立即执行</a>
+		</td>
+	</tr>
+</tbody>
+</table>
