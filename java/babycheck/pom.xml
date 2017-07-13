@@ -12,6 +12,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<guyue.commonweb.version>0.0.1-SNAPSHOT</guyue.commonweb.version>
 	</properties>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -19,6 +20,17 @@
 		<version>1.4.2.RELEASE</version>
 	</parent> 
 	<dependencies>
+		<dependency>
+			<groupId>com.guyue</groupId>
+			<artifactId>commonweb</artifactId>
+			<version>${guyue.commonweb.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -41,10 +53,6 @@
   	</profile>
   </profiles>
   <build>
-  	<filters>
-			<filter>${project.basedir}/profiles/${build.profile.product}/base.properties</filter>
-			<filter>${project.basedir}/profiles/${build.profile.product}/${build.profile.env}.properties</filter>
-	</filters>
     <plugins>
         <plugin>
             <groupId>org.springframework.boot</groupId>

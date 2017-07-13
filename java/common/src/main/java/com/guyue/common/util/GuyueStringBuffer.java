@@ -5,6 +5,22 @@ public class GuyueStringBuffer {
 	public GuyueStringBuffer(){
 		this.sb = new StringBuffer();
 	}
+	
+    public GuyueStringBuffer(int capacity) {
+    	this.sb = new StringBuffer(capacity);
+    }
+
+   
+    public GuyueStringBuffer(String str) {
+    	this.sb = new StringBuffer(str.length() + 16);
+    	this.sb.append(str);
+    }
+
+  
+    public GuyueStringBuffer(CharSequence seq) {
+    	this.sb = new StringBuffer(seq.length() + 16);
+    	this.sb.append(seq);
+    }
 	public int length(){
 		return sb.length();
 	}

@@ -97,6 +97,17 @@ public class DateUtil {
 
 	        return sdf.format(cal.getTime());
 	    }
+	    /**
+	     * Get the current date yyyy-MM-dd.
+	     *
+	     * @param dateFormat the input dateFormat.
+	     *                   See the <code>java.text.SimpleDateFormat</code> API for date format
+	     *                   string examples
+	     */
+	    public static String getCurrentDateString() {
+	        Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+	        return df_ymd.format(cal.getTime());
+	    }
 
 	    /**
 	     * Get the string representation of the input Date object
