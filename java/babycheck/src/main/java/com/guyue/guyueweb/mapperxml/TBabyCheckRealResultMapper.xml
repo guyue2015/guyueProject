@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guyue.guyueweb.mapper.TBabyCheckRealResultMapper">
+  <resultMap id="BaseResultMap" type="com.guyue.guyueweb.mapperbean.TBabyCheckRealResult">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="c_birthday" jdbcType="VARCHAR" property="cBirthday" />
+    <result column="c_eitem" jdbcType="VARCHAR" property="cEitem" />
+    <result column="c_target_msms" jdbcType="VARCHAR" property="cTargetMsms" />
+    <result column="c_target_g6pd" jdbcType="VARCHAR" property="cTargetG6pd" />
+    <result column="c_host" jdbcType="VARCHAR" property="cHost" />
+    <result column="c_mother_name" jdbcType="VARCHAR" property="cMotherName" />
+    <result column="c_conclusioin_g6pd" jdbcType="VARCHAR" property="cConclusioinG6pd" />
+    <result column="c_targer_17_aohp" jdbcType="VARCHAR" property="cTarger17Aohp" />
+    <result column="c_conclusion_phe" jdbcType="VARCHAR" property="cConclusionPhe" />
+    <result column="c_conclusion_17aohp" jdbcType="VARCHAR" property="cConclusion17aohp" />
+    <result column="c_sex" jdbcType="VARCHAR" property="cSex" />
+    <result column="c_collectdate" jdbcType="VARCHAR" property="cCollectdate" />
+    <result column="c_babybh" jdbcType="VARCHAR" property="cBabybh" />
+    <result column="c_target_phe" jdbcType="VARCHAR" property="cTargetPhe" />
+    <result column="c_targer_tsh" jdbcType="VARCHAR" property="cTargerTsh" />
+    <result column="c_conclusion_msms" jdbcType="VARCHAR" property="cConclusionMsms" />
+    <result column="c_conclusion_tsh" jdbcType="VARCHAR" property="cConclusionTsh" />
+  </resultMap>
+</mapper>

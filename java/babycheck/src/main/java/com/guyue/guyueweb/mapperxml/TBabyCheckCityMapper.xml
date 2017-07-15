@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guyue.guyueweb.mapper.TBabyCheckCityMapper">
+  <resultMap id="BaseResultMap" type="com.guyue.guyueweb.mapperbean.TBabyCheckCity">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="c_city_bh" jdbcType="VARCHAR" property="cCityBh" />
+    <result column="c_url" jdbcType="VARCHAR" property="cUrl" />
+    <result column="c_valid" jdbcType="VARCHAR" property="cValid" />
+  </resultMap>
+</mapper>

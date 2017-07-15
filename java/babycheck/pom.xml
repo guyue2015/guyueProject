@@ -11,8 +11,16 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
+	    <start-class>com.guyue.guyueweb.GuyueWebApplication</start-class>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<guyue.commonweb.version>0.0.1-SNAPSHOT</guyue.commonweb.version>
+		<mapper.version>3.3.9</mapper.version>
+		<!--  MyBatis Generator  命令 mvn mybatis-generator:generate-->
+        <!--  Java接口和实体类  -->
+        <targetJavaProject>${basedir}/src/main/java</targetJavaProject>
+        <targetMapperPackage>com.guyue.guyueweb.mapper</targetMapperPackage>
+        <targetModelPackage>com.guyue.guyueweb.mapperbean</targetModelPackage>
+        <targetXMLPackage>com.guyue.guyueweb.mapperxml</targetXMLPackage>
 	</properties>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -35,23 +43,59 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-typehandlers-jsr310</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>  
+    		<groupId>org.springframework.boot</groupId>  
+    		<artifactId>spring-boot-configuration-processor</artifactId>  
+    		<optional>true</optional>  
+		</dependency> 
 	</dependencies>
   <build>
     <plugins>
         <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-            <configuration>
-                <mainClass>com.guyue.babycheck.BabyProjectApplication</mainClass>
-            </configuration>
-            <executions>
-                <execution>
-                    <goals>
-                        <goal>repackage</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.3</version>
+                <configuration>
+                    <configurationFile>${basedir}/src/main/resources/mbg/MyBatisGeneratorConfig.xml</configurationFile>
+                    <overwrite>true</overwrite>
+                    <verbose>true</verbose>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>tk.mybatis</groupId>
+                        <artifactId>mapper</artifactId>
+                        <version>${mapper.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+            	<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
     </plugins>
 </build>
 </project>
