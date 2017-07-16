@@ -1,6 +1,6 @@
 datasource:
   master:
-    url: jdbc:mysql://192.168.137.128:3306/babycheck?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.137.128:3306/slowsqlcenter?useUnicode=true&characterEncoding=utf-8&useSSL=true
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -10,7 +10,7 @@ datasource:
     pool-prepared-statements: true
     max-open-prepared-statements: 20
   slave:
-    url: jdbc:mysql://192.168.137.128:3306/babycheck?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.137.128:3306/babycheck?useUnicode=true&characterEncoding=utf-8&useSSL=true
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver

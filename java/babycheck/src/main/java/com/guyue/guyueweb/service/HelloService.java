@@ -19,6 +19,6 @@ public class HelloService {
 	
 	 public void print(){
 		 List<TBabyCheckCity> selectAll = tBabyCheckCityMapper.selectAll();
-		 log.debug("测试数据库查询：结果为：");
+		 log.info("测试数据库查询：结果为：{}",selectAll.size());
 	 }
 }
