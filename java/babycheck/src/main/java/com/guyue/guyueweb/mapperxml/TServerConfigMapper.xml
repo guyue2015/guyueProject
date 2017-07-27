@@ -14,17 +14,4 @@
     <result column="d_updatetime" jdbcType="TIMESTAMP" property="dUpdatetime" />
     <result column="d_createtime" jdbcType="TIMESTAMP" property="dCreatetime" />
   </resultMap>
-  <resultMap id="BaseResultMap" type="com.guyue.guyueweb.mapperbean.TServerConfig">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="c_ip" jdbcType="VARCHAR" property="cIp" />
-    <result column="c_port" jdbcType="VARCHAR" property="cPort" />
-    <result column="c_username" jdbcType="VARCHAR" property="cUsername" />
-    <result column="c_password" jdbcType="VARCHAR" property="cPassword" />
-    <result column="c_slowlogstatus" jdbcType="VARCHAR" property="cSlowlogstatus" />
-    <result column="d_updatetime" jdbcType="TIMESTAMP" property="dUpdatetime" />
-    <result column="d_createtime" jdbcType="TIMESTAMP" property="dCreatetime" />
-  </resultMap>
 </mapper>

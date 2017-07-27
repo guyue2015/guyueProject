@@ -20,7 +20,7 @@ datasource:
     pool-prepared-statements: true
     max-open-prepared-statements: 20
 server:
-  port: 7000
+  port: 5000
 
 spring:
   application:
