@@ -1,1 +1,0 @@
-[2017-07-06 22:10:59] [ERROR] - org.apache.http.conn.HttpHostConnectException: Connect to fyxs.isgenetic.com:80 [fyxs.isgenetic.com/42.236.94.55] failed: Connection timed out: connect
