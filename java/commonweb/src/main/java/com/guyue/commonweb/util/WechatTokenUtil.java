@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
  * @author Bolor
  *
  */
-@Component
 @Slf4j
 public class WechatTokenUtil {
 
