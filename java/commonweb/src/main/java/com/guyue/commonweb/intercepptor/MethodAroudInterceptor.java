@@ -9,7 +9,7 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.stereotype.Component;
 @Component
 @Slf4j
-public class RequestRecordInterceptor implements MethodInterceptor{
+public class MethodAroudInterceptor implements MethodInterceptor{
     
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {

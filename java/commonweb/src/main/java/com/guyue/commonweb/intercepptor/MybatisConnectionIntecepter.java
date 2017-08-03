@@ -15,7 +15,7 @@ import org.apache.ibatis.plugin.Signature;
 
 @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class,Integer.class}) })
 @Slf4j
-public class MybatisIntecepter  implements Interceptor {
+public class MybatisConnectionIntecepter  implements Interceptor {
 
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {

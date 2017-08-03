@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.github.pagehelper.util.StringUtil;
-import com.guyue.commonweb.intercepptor.MybatisIntecepter;
-import com.guyue.commonweb.intercepptor.RequestRecordInterceptor;
+import com.guyue.commonweb.intercepptor.MybatisConnectionIntecepter;
+import com.guyue.commonweb.intercepptor.MethodAroudInterceptor;
 import com.guyue.commonweb.config.GuyueWebCommonConfig;
 
 @Configuration
-public class MybatisConfig{
+public class CommonwebConfig{
    @Value("${guyue.record.time.method.package:com.guyue.commonweb.empty.*}")
    private String recordPackagePath;
    /**
@@ -29,7 +29,7 @@ public class MybatisConfig{
 	   GuyueWebCommonConfig guyueWebBean = new GuyueWebCommonConfig();
 //	   注册mybatis 插件
 	   try {
-		sqlSessionFactoryBean.getObject().getConfiguration().addInterceptor(new MybatisIntecepter());
+		sqlSessionFactoryBean.getObject().getConfiguration().addInterceptor(new MybatisConnectionIntecepter());
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
@@ -44,7 +44,7 @@ public class MybatisConfig{
    @Bean 
    public RegexpMethodPointcutAdvisor setMymethodpoInt(){
        RegexpMethodPointcutAdvisor methodPointAdvisor= new RegexpMethodPointcutAdvisor();
-       methodPointAdvisor.setAdvice(new RequestRecordInterceptor());
+       methodPointAdvisor.setAdvice(new MethodAroudInterceptor());
        methodPointAdvisor.setPatterns(recordPackagePath);
        return methodPointAdvisor; 
    }
