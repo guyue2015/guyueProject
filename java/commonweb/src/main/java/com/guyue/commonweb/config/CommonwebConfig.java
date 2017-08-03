@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.github.pagehelper.util.StringUtil;
 import com.guyue.commonweb.intercepptor.MybatisConnectionIntecepter;
 import com.guyue.commonweb.intercepptor.MethodAroudInterceptor;
+import com.guyue.commonweb.intercepptor.MybatisSqlIntercepter;
 import com.guyue.commonweb.config.GuyueWebCommonConfig;
 
 @Configuration
@@ -30,6 +31,7 @@ public class CommonwebConfig{
 //	   注册mybatis 插件
 	   try {
 		sqlSessionFactoryBean.getObject().getConfiguration().addInterceptor(new MybatisConnectionIntecepter());
+		sqlSessionFactoryBean.getObject().getConfiguration().addInterceptor(new MybatisSqlIntercepter());
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
