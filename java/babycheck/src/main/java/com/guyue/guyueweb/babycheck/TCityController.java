@@ -18,7 +18,7 @@ public class TCityController {
 	private TCityService tCityService;
 	
 	@RequestMapping(value="",method = RequestMethod.GET)
-	public ApiResult listTCity(@RequestBody TBabyCheckCity tCity){
+	public ApiResult listTCity(TBabyCheckCity tCity){
 		return tCityService.listTCity(tCity);
 	}
 	@RequestMapping(value="",method = RequestMethod.POST)
@@ -26,11 +26,15 @@ public class TCityController {
 		return tCityService.saveTCity(tCity);
 	}
 	@RequestMapping(value="",method = RequestMethod.PUT)
-	public ApiResult updateTCity(TBabyCheckCity tCity){
+	public ApiResult updateTCity(@RequestBody TBabyCheckCity tCity){
 		return tCityService.updateTCity(tCity);
 	}
 	@RequestMapping(value="/{id}",method = RequestMethod.GET)
 	public ApiResult getTCity(@PathVariable Integer id){
 		return tCityService.getTCity(id);
+	}
+	@RequestMapping(value="/{id}",method = RequestMethod.DELETE)
+	public ApiResult delTCity(@PathVariable Long id){
+		return tCityService.deleteTCity(id);
 	}
 }

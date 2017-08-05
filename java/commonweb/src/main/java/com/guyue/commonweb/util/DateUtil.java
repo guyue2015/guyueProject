@@ -187,6 +187,24 @@ public class DateUtil {
             return dateString;
         }
     }
+    @SuppressWarnings({"finally"})
+    public static String formatDateYYYYMMDD(Date theDate) {
+        Locale locale = Locale.CHINA;
+        String dateString = "";
+        try {
+            Calendar cal = Calendar.getInstance(locale);
+            cal.setFirstDayOfWeek(Calendar.TUESDAY);
+            cal.setTime((Date) theDate);
+
+            //DateFormat dateFormatter = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.MEDIUM,locale);
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd", locale);
+            dateString = dateFormatter.format(cal.getTime());
+        } catch (Exception e) {
+            System.out.println("test result:" + e.getMessage());
+        } finally {
+            return dateString;
+        }
+    }
 
     public static int getDateDiff(Date date1, Date date2, int sign) {
 

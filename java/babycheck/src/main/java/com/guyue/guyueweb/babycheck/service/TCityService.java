@@ -62,5 +62,10 @@ public class TCityService extends BabyCommonService{
 			return ApiResult.invalid("没有对应的数据");
 		}
 	}
+
+	public ApiResult deleteTCity(Long id) {
+		tBabyCheckCityMapper.deleteByPrimaryKey(id);
+		return ApiResult.success();
+	}
 	
 }

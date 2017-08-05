@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -26,7 +27,10 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 @Intercepts({  
     @Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }),  
     @Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,  
-            RowBounds.class, ResultHandler.class }) })  
+            RowBounds.class, ResultHandler.class }),
+    @Signature(type=Executor.class,method ="query",args = {
+        MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class
+    })})  
 @Slf4j
 public class MybatisSqlIntercepter  implements Interceptor {
     
