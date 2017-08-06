@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class BabyCheckVo {
-	private Long startNo;
+	private String startNo;
 	private Integer increment;
 	private Integer year;
 	private Long cityId;

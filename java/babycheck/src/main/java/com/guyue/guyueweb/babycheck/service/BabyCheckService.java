@@ -1,7 +1,15 @@
 package com.guyue.guyueweb.babycheck.service;
 
+import java.io.IOException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -12,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.guyue.commonweb.BasePackage.ApiResult;
 import com.guyue.commonweb.util.DateUtil;
@@ -32,31 +41,45 @@ public class BabyCheckService extends BabyCommonService{
 	private ExecutorService executorService = Executors.newFixedThreadPool(100);
 	
 	public ApiResult checkDoding(BabyCheckVo babyCheckVo) {
-		Long startNo = babyCheckVo.getStartNo();
+		String startNo = babyCheckVo.getStartNo();
 		Integer year = babyCheckVo.getYear();
-		Hashtable<Long, Object> checkResult = new Hashtable<Long, Object>();
+		Hashtable<String, Object> checkResult = new Hashtable<String, Object>();
 		String url = tBabyCheckCityMapper.selectByPrimaryKey(babyCheckVo.getCityId()).getcUrl();
+		char[] noArray = startNo.toCharArray();
+		int indexNotZero=0;
+		for(int i=0;i<noArray.length;i++){
+			char temp = noArray[i];
+			if(temp!='0'){
+				indexNotZero=i;
+				break;
+			}
+		}
+		String substartNo = startNo.substring(0, indexNotZero);
+		Long valus = Long.valueOf(startNo.substring(indexNotZero, startNo.length()));
+		String runNo = startNo;
 		for(int i=0;i<babyCheckVo.getIncrement();i++){
-			executorService.submit(new BabyCheckThread(startNo++,year,url,checkResult));
+			runNo = substartNo+""+valus;
+			executorService.submit(new BabyCheckThread(startNo,year,url,checkResult));
+			valus++;
 		}
 		return null;
 	}
 }
 @Slf4j
 class BabyCheckThread implements Runnable{
-	private Long startNo;
+	private String startNo;
 	private String checkUrl;
 	private Date startDate;
 	private Date endDate;
-	private Hashtable<Long, Object> checkResult;
-	public BabyCheckThread(Long startNo, Integer year,String checkUrl, Hashtable<Long, Object> checkResult) {
+	private Hashtable<String, Object> checkResult;
+	public BabyCheckThread(String startNo, Integer year,String checkUrl, Hashtable<String, Object> checkResult) {
 		this.startNo = startNo;
 		this.checkUrl = checkUrl;
 		this.checkResult = checkResult;
 		Calendar cal = Calendar.getInstance();
-		cal.set(2000+year, 1, 1);
+		cal.set(2000+year, 0, 1);
 		this.startDate = cal.getTime();
-		cal.set(2000+year, 12, 31);
+		cal.set(2000+year, 11, 31);
 		this.endDate = cal.getTime();
 	}
 	@Override
@@ -64,13 +87,30 @@ class BabyCheckThread implements Runnable{
 		RestClient restClient = new RestClient();
 		Boolean hasResult=Boolean.FALSE;
 		while(!hasResult&&startDate.before(endDate)){
-			Map<String,Object> result = restClient.get(String.format(checkUrl, startNo,DateUtil.formatDateYYYYMMDD(startDate)), Map.class);			 
-			if(result!=null){
+			Map<String,String> params = new HashMap<String, String>();
+			params.put("barcode", startNo);
+			params.put("birthday", DateUtil.formatDateYYYYMMDD(startDate));
+//			Map<String,Object> result = restClient.get(String.format(checkUrl, startNo,DateUtil.formatDateYYYYMMDD(startDate)), Map.class);			 
+			String result = restClient.post(checkUrl,params, String.class);
+			if(StringUtils.isEmpty(result)||result.contains("[]")){
+				startDate = DateUtil.addDays(startDate, 1);
+				try {
+					Thread.sleep(30);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}else{
+				String logString = "编号："+startNo+",结果:"+result;
 				log.info("获取检测编号：{},结果：{}",startNo,result);
 				checkResult.put(startNo, result);
+				Path logFilepath = FileSystems.getDefault().getPath("F:\\logFile.txt");
+				try {
+					Files.write(logFilepath, logString.getBytes(), StandardOpenOption.APPEND);
+				} catch (IOException e) {
+					log.error("记录结果失败",e);
+				}
 				hasResult = Boolean.TRUE;
 			}
-			startDate = DateUtil.addDays(startDate, 1);
 		}
 	}
 	
