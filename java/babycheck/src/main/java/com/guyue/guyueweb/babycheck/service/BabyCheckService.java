@@ -24,6 +24,7 @@ import org.springframework.util.StringUtils;
 
 import com.guyue.commonweb.BasePackage.ApiResult;
 import com.guyue.commonweb.util.DateUtil;
+import com.guyue.commonweb.util.HttpClientUtil;
 import com.guyue.commonweb.util.RestClient;
 import com.guyue.guyueweb.babycheck.vo.BabyCheckVo;
 import com.guyue.guyueweb.mapper.TBabyCheckCityMapper;
@@ -59,7 +60,7 @@ public class BabyCheckService extends BabyCommonService{
 		String runNo = startNo;
 		for(int i=0;i<babyCheckVo.getIncrement();i++){
 			runNo = substartNo+""+valus;
-			executorService.submit(new BabyCheckThread(startNo,year,url,checkResult));
+			executorService.submit(new BabyCheckThread(runNo,year,url,checkResult));
 			valus++;
 		}
 		return null;
@@ -84,14 +85,12 @@ class BabyCheckThread implements Runnable{
 	}
 	@Override
 	public void run() {
-		RestClient restClient = new RestClient();
 		Boolean hasResult=Boolean.FALSE;
 		while(!hasResult&&startDate.before(endDate)){
 			Map<String,String> params = new HashMap<String, String>();
 			params.put("barcode", startNo);
 			params.put("birthday", DateUtil.formatDateYYYYMMDD(startDate));
-//			Map<String,Object> result = restClient.get(String.format(checkUrl, startNo,DateUtil.formatDateYYYYMMDD(startDate)), Map.class);			 
-			String result = restClient.post(checkUrl,params, String.class);
+			String result = HttpClientUtil.httpPost(checkUrl, null, params, "utf-8");
 			if(StringUtils.isEmpty(result)||result.contains("[]")){
 				startDate = DateUtil.addDays(startDate, 1);
 				try {

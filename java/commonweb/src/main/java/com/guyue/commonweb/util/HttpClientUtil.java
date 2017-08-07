@@ -1,4 +1,4 @@
-package com.guyue.common.util;
+package com.guyue.commonweb.util;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

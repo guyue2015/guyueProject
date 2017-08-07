@@ -5,8 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.guyue.common.util.DateUtil;
-import com.guyue.common.util.HttpClientUtil;
-import com.guyue.common.util.StringUtil;
+import com.guyue.commonweb.util.HttpClientUtil;
 
 public class TestGetBabayInfo {
 	private static List<String> urlGet = new ArrayList<String>();
