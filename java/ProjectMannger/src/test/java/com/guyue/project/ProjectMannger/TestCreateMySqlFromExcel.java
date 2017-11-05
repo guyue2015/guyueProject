@@ -49,8 +49,8 @@ public class TestCreateMySqlFromExcel
      */
     public void testCreateMysqlForYouxinPay()
     {
-    	String excelFilePath= "J:\\git\\project\\项目数据库设计\\古月系统数据库.xlsx";
-    	String sqlFilePath = "J:\\git\\project\\sql";
+    	String excelFilePath= "J:\\git\\guyueProject\\db\\古月系统数据库.xlsx";
+    	String sqlFilePath = "J:\\git\\guyueProject\\db";
     	Path excelPath = FileSystems.getDefault().getPath(excelFilePath);
     	Path sqlPath = FileSystems.getDefault().getPath(sqlFilePath);
     	CreateMySQLFromExcel.createMysqlFromExcel(excelPath, sqlPath);
